@@ -1,0 +1,9 @@
+.title_products{
+    border-bottom: 2px solid #fa96a7;
+}
+.title_products span{
+    border-bottom: 5px solid #fa96a7;
+    font-size: 35px;
+    font-weight: bold;
+    transition: change_color 2s ease infinite alternate;
+}

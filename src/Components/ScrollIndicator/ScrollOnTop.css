@@ -1,0 +1,22 @@
+/* scroll on top */
+.onTop {
+    position: fixed;
+    bottom: 12px;
+    right: 10%;
+    background: red;
+    opacity: 0.6;
+    color: white;
+  }
+  
+  .onTop .icon {
+    animation: ScrollTop 0.5s ease-in-out infinite alternate;
+  }
+  @keyframes ScrollTop {
+    from {
+      transform: translateY(3px);
+    }
+    to {
+      transform: translateY(-3px);
+    }
+  }
+  

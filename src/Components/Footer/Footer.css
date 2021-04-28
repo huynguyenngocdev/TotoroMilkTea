@@ -1,0 +1,141 @@
+/*!~~~~footer style~~~~*/
+
+.footer {
+    width: 100%;
+    background: #00ccff;
+  }
+  
+  .footer-info {
+    position: relative;
+    padding: 30px 0;
+    color: white;
+  }
+  
+  .footer-logo {
+    text-align: center;
+    position: relative;
+  }
+  
+  .footer-logo .text-left{
+    font-size: 45px;
+  }
+  
+  .footer-info .title {
+    margin-bottom: 25px;
+    margin-top: 15px;
+    color: #fff;
+    font-size: 18px;
+  }
+  
+  .footer-info p {
+    font-size: 13px;
+  }
+  
+  .support ul {
+    position: relative;
+    margin: 0 0 10px 0;
+    padding: 0;
+  }
+  
+  .support li {
+    display: list-item;
+    list-style: disc inside;
+    color: #f7544a;
+    margin-bottom: 5px;
+  }
+  
+  .support li a {
+    color: white;
+  }
+  
+  .support li a:hover {
+    color: #f7544a;
+  }
+  
+  form.newsletter {
+    float: left;
+    width: 100%;
+    position: relative;
+    padding-top: 10px;
+  }
+  
+  form.newsletter input[type="text"],
+  form.newsletter input[type="submit"] {
+    float: left;
+    height: 33px;
+    padding: 5px;
+    width: 75%;
+    font-size: 13px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border: 1px solid #575757;
+    background: none;
+    color: #fff;
+  }
+  
+  form.newsletter input[type="submit"] {
+    float: right;
+    width: 23%;
+  }
+  
+  form.newsletter input[type="submit"]:hover {
+    color: #f7544a;
+  }
+  
+  .copyright-info {
+    position: relative;
+    overflow: hidden;
+    background: #181818;
+    padding: 15px 0;
+    border-top: 1px solid #303030;
+  }
+  
+  .copyright-info p {
+    padding-top: 10px;
+    color: #898989;
+    font-size: 13px;
+  }
+  
+  .copyright-info a {
+    color: #f7544a;
+  }
+  
+  .social-icon {
+    float: right;
+    padding-top: 4px;
+  }
+  
+  .social-icon li {
+    display: inline-block;
+    margin-left: 10px;
+  }
+  
+  .social-icon li a {
+    float: left;
+    width: 25px;
+    height: 25px;
+    font-size: 0;
+    scroll-behavior: smooth;
+    background-position: center top;
+  }
+  
+  .social-icon li a:hover {
+    transition: 0.3s;
+    background-position: center bottom;
+  }
+  
+  .social-icon li a.google-plus {
+    background-image: url('../../assets/images/social-icon/gplus.png');
+  }
+  
+  .social-icon li a.linkedIn {
+    background-image: url('../../assets/images/social-icon/in.png');
+  }
+  
+  .social-icon li a.facebook {
+    background-image: url('../../assets/images/social-icon/f.png');
+  }
+  
+  .social-icon li a.twitter {
+    background-image: url('../../assets/images//social-icon/twi.png');
+  }
