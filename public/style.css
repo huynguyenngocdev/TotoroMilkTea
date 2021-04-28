@@ -1,0 +1,15 @@
+@import "https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap";
+@import "https://fonts.googleapis.com/css2?family=Lobster&display=swap";
+
+/* css all */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 20px;
+  font-family: "Patrick Hand";
+  scroll-behavior: smooth;
+}
+a {
+  cursor: pointer;
+}
