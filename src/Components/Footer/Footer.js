@@ -82,7 +82,7 @@ class Footer extends React.Component {
               <div className="col-md-7">
                 <p>
                   ©2021 Copyright by
-                  <a href="https://www.facebook.com/ulrich.stern.319452/"> Nguyễn Ngọc Huy &amp; Nguyễn Thị Diễm</a>
+                  <a href="https://www.facebook.com/ulrich.stern.319452/"> Nguyễn Ngọc Huy &amp; Nguyễn Thị Diễm <br/> &amp; Lê Thị Hồng Hạnh &amp; Phạm Anh Tuấn </a>
                 </p>
               </div>
               <div className="col-md-5">

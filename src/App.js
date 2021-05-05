@@ -1,32 +1,31 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
-import Header from "./Components/Header/Header";
-
-import ScrollOnTop from "./Components/ScrollIndicator/ScrollOnTop";
-
-import Register from "./Components/Authentication/Register";
-import Login from "./Components/Authentication/Login";
-import Ads from "./Components/Advertisement/Ads";
-
-import Footer from "./Components/Footer/Footer";
+import routes from "./routes.js";
 
 class App extends React.Component {
+  showContent = (routes) => {
+    let result = null;
+    if (routes.length > 0) {
+      result = routes.map((route, index) => {
+        return (
+          <Route
+            key={index}
+            path={route.path}
+            exact={route.exact}
+            component={route.main}
+          />
+        );
+      });
+    }
+    return result;
+  };
   render() {
     return (
       <Router>
         <div>
           <Switch>
-            <Route path="/about" component={Header} />
-
-            <Route path="/">
-              <Header />
-              <ScrollOnTop />
-              <Ads />
-              <Register />
-              <Login />
-              <Footer />
-            </Route>
+            {this.showContent(routes)}
           </Switch>
         </div>
       </Router>

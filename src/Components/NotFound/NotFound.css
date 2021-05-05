@@ -1,0 +1,65 @@
+
+.error-bg div {
+  display: block;
+}
+
+.error-bg {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background: black;
+  background: url("./bg404.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.error-bg #text1 {
+  font-size: 15vw;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+}
+
+.error-bg #text2 {
+  font-size: 4vw;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+}
+
+.error-bg hr {
+  color: white;
+  background: white;
+  font-weight: bold;
+  width: 50vw;
+  height: 5px;
+}
+
+.error-bg table {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error-bg table tr,
+td {
+  text-align: center;
+  margin: 10px;
+}
+
+.error-bg a {
+  font-size: 3vw;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  color: white;
+}
+
+.error-bg button {
+  border-radius: 20px;
+  padding: 10px 20px;
+  background: rgb(231, 57, 57);
+}

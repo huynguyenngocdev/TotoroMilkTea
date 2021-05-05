@@ -19,7 +19,7 @@ class Navbar extends React.Component {
           >
             <span className="navbar-toggler-icon" />
           </button>
-          <div className="navbar-collapse collapse" id="navbar" style={{}}>
+          <div className="navbar-collapse collapse" id="navbar">
             <ul className="navbar-nav mr-auto">
               <li className="nav-item">
                 <a className="nav-link">
@@ -42,7 +42,7 @@ class Navbar extends React.Component {
                   </select>
                 </div>
               </li>
-              <li className="nav-item">
+              <li className="nav-item form-inline">
                 <form className="form-inline">
                   <input
                     className="form-control"
