@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import Images from 'Constants/images'
-import './Ads.css'
+import adsImage from "../../assets/images/advertisement/cup.jpg";
+import "./Ads.css";
+
 const Ads = () => {
   const [timerDays, setTimerDays] = useState("00");
   const [timerHours, setTimerHours] = useState("00");
@@ -10,7 +11,7 @@ const Ads = () => {
   let interval = useRef();
 
   const startTimer = () => {
-    const countdownDate = new Date("May 1 2021 00:00:00").getTime();
+    const countdownDate = new Date("May 14 2021 00:00").getTime();
 
     interval = setInterval(() => {
       const now = new Date().getTime();
@@ -44,12 +45,15 @@ const Ads = () => {
   });
 
   return (
-    <div className="container ads">
-        <img src={Images.adsImage} className="img-ads" />
+    <div>
+      <div className="container ads">
+        <img src={adsImage} className="img-ads" />
         <section>
           <div className="text-center">
-            <p>Khuyến mãi cực sốc</p>
-            <p>Tặng cốc Totoro cho 5 khách hàng có tổng chi tiêu cao nhất</p>
+            <p>
+              Khuyến mãi cực sốc
+              <br /> Tặng cốc Totoro cho 5 khách hàng có hóa đơn cao nhất
+            </p>
             <p>Khuyến mãi còn: </p>
           </div>
           <div className="text-center">
@@ -59,6 +63,15 @@ const Ads = () => {
             <span>{timerSeconds}</span>S
           </div>
         </section>
+      </div>
+      <div className="container text-run">
+        <marquee>
+          <span classname="marquee">
+            Khuyến mãi tưng bừng nhân dịp 30/4 và 1/5! Giảm giá cực sốc! Giảm
+            tới 40% cho mỗi cốc trà sữa thơm ngon
+          </span>
+        </marquee>
+      </div>
     </div>
   );
 };

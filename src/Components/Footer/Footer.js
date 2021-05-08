@@ -36,13 +36,13 @@ class Footer extends React.Component {
                 </h6>
                 <ul className="support">
                   <li>
-                    <a href="#">Chính sách bảo mật</a>
+                    <a href="/">Chính sách bảo mật</a>
                   </li>
                   <li>
-                    <a href="#">Phương Thức Thanh Toán</a>
+                    <a href="/">Phương Thức Thanh Toán</a>
                   </li>
                   <li>
-                    <a href="#">Thông Tin</a>
+                    <a href="/">Thông Tin</a>
                   </li>
                 </ul>
               </div>
@@ -88,28 +88,25 @@ class Footer extends React.Component {
               <div className="col-md-5">
                 <ul className="social-icon">
                   <li>
-                    <a
-                      href="mailto:huy.nguyen22@student.passerellesnumeriques.org"
-                      className="google-plus"
-                    ></a>
+                    <a href="mailto:huy.nguyen22@student.passerellesnumeriques.org" className="google-plus"S>email</a>
                   </li>
                   <li>
                     <a
                       href="https://www.linkedin.com/in/nguy%E1%BB%85n-ng%E1%BB%8Dc-huy-363b26207/"
                       className="linkedIn"
-                    ></a>
+                    >linkedIn</a>
                   </li>
                   <li>
                     <a
                       href="https://www.facebook.com/ulrich.stern.319452/"
                       className="facebook"
-                    ></a>
+                    >FB</a>
                   </li>
                   <li>
                     <a
                       href="https://twitter.com/Nagamaru8"
                       className="twitter"
-                    ></a>
+                    >Twitter</a>
                   </li>
                 </ul>
               </div>

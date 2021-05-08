@@ -19,17 +19,17 @@ class Register extends Component {
     alert("Đăng ký thành công");
   }
 
-  showPassword = (event) => {
+  showPasswordR = (event) => {
     event.preventDefault();
-    console.log($("#pwd").attr("type"));
-    if ($("#pwd").attr("type") === "text") {
-      $("#pwd").attr("type", "password");
-      $("#eye-icon").addClass("fa-eye-slash");
-      $("#eye-icon").removeClass("fa-eye");
-    } else if ($("#pwd").attr("type") === "password") {
-      $("#pwd").attr("type", "text");
-      $("#eye-icon").removeClass("fa-eye-slash");
-      $("#eye-icon").addClass("fa-eye");
+    //console.log(document.getElementById("pwdR").getAttribute('type'));
+    if ($("#pwdR").attr("type") === "text") {
+      $("#pwdR").attr("type", "password");
+      $("#eye-icon-register").addClass("fa-eye-slash");
+      $("#eye-icon-register").removeClass("fa-eye");
+    } else if ($("#pwdR").attr("type") === "password") {
+      $("#pwdR").attr("type", "text");
+      $("#eye-icon-register").removeClass("fa-eye-slash");
+      $("#eye-icon-register").addClass("fa-eye");
     }
   };
 
@@ -38,7 +38,7 @@ class Register extends Component {
       <div
         className="modal fade"
         id="registerModal"
-        tabindex="-1"
+        tabIndex="-1"
         role="dialog"
         aria-labelledby="registerModalLabel"
         aria-hidden="true"
@@ -142,11 +142,11 @@ class Register extends Component {
                     <button
                       type="button"
                       className="btn btn-outline-dark input-group-addon"
-                      onClick={this.showPassword}
+                      onClick={this.showPasswordR}
                     >
                       <i
                         className="fa fa-eye-slash"
-                        id="eye-icon"
+                        id="eye-icon-register"
                         aria-hidden="true"
                       ></i>
                     </button>

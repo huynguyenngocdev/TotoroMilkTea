@@ -1,12 +1,25 @@
 import React, { Component } from "react";
-
+import $ from "jquery";
 class Login extends Component {
+  showPasswordL = (event) => {
+    event.preventDefault();
+    //console.log(document.getElementById("pwdL").getAttribute('type'));
+    if ($("#pwdL").attr("type") === "text") {
+      $("#pwdL").attr("type", "password");
+      $("#eye-icon-login").addClass("fa-eye-slash");
+      $("#eye-icon-login").removeClass("fa-eye");
+    } else if ($("#pwdL").attr("type") === "password") {
+      $("#pwdL").attr("type", "text");
+      $("#eye-icon-login").removeClass("fa-eye-slash");
+      $("#eye-icon-login").addClass("fa-eye");
+    }
+  };
   render() {
     return (
       <div
         className="modal fade"
         id="loginModal"
-        tabindex="-1"
+        tabIndex="-1"
         role="dialog"
         aria-labelledby="loginModalLabel"
         aria-hidden="true"
@@ -54,11 +67,11 @@ class Login extends Component {
                     <button
                       type="button"
                       className="btn btn-outline-dark input-group-addon"
-                      onClick={this.showPassword}
+                      onClick={this.showPasswordL}
                     >
                       <i
                         className="fa fa-eye-slash"
-                        id="eye-icon"
+                        id="eye-icon-login"
                         aria-hidden="true"
                       ></i>
                     </button>

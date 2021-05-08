@@ -1,40 +1,50 @@
-
 /* advertisement */
 .ads {
-    margin-bottom: 20px;
-    background: url('../../assets/images/advertisement/bg_ads.jpg');
-    background-size: 80vw 400px;
-    background-repeat: no-repeat;
-    background-clip: border-box;
-    background-position: center;
+  margin-bottom: 20px;
+  background: url("../../assets/images/advertisement/bg_ads.jpg");
+  background-size: 80vw 400px;
+  background-repeat: no-repeat;
+  background-clip: border-box;
+  background-position: center;
+  display: flex;
+  flex-direction: row;
+  font-size: 2vw;
+}
+.ads .img-ads {
+  width: 330px;
+}
+.ads section div {
+  font-size: 3vw;
+}
+.ads section div span {
+  font-size: 3vw;
+  background: rgb(250, 150, 167);
+  border-radius: 5px;
+  border: 2px solid rgb(255, 113, 137);
+  padding: 10px;
+}
+
+.ads section div p {
+  font-size: 3vw;
+}
+
+@media (max-width: 430px) {
+  .ads {
     display: flex;
-    flex-direction: row;
-    font-size: 2vw;
+    flex-direction: column;
   }
-  .ads .img-ads{
-    width: 330px;
+  .ads .img-ads {
+    width: 150px;
   }
-  .ads section div {
-    font-size: 3vw;
-  }
-  .ads section div span {
-    font-size: 3vw;
-    background: rgb(250, 150, 167);
-    border-radius: 5px;
-    border: 2px solid rgb(255, 113, 137);
-    padding: 10px;
-  }
-  
-  .ads section div p {
-    font-size: 3vw;
-  }
-  
-  @media (max-width: 430px) {
-    .ads {
-      display: flex;
-      flex-direction: column;
-    }
-    .ads .img-ads{
-      width: 150px;
-    }
-  }
+}
+
+.text-run {
+  background-color: #ffff00;
+  color: #fd0100;
+}
+
+.text-run .marquee {
+  background: red;
+  animation: rightThenLeft 1s linear;
+  overflow: hidden;
+}

@@ -22,12 +22,12 @@ class Navbar extends React.Component {
           <div className="navbar-collapse collapse" id="navbar">
             <ul className="navbar-nav mr-auto">
               <li className="nav-item">
-                <a className="nav-link">
-                  <i className="fas fa-coffee fw"></i>Sản Phẩm
+                <a className="nav-link" href='#products'>
+                  <i className="fas fa-coffee fw"/>Sản Phẩm
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link">
+                <a className="nav-link" href="#a">
                   <i className="fas fa-shopping-cart fw" aria-hidden="true"></i>
                   Giỏ Hàng
                 </a>

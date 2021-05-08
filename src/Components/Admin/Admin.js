@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import OrderManagement from "./OrderManagement";
 import UserManagement from "./UserManagement";
- 
+import AdsManagement from './AdsManagement'
+import "./Admin.css";
 class Admin extends Component {
   constructor(props) {
     super(props);
@@ -10,21 +11,29 @@ class Admin extends Component {
 
   render() {
     return (
-      <div>
-        <div className="adminpage">
-          <NavLink type="button" className="btn btn-lg btn-primary" to="/">
-            Về trang chủ
-          </NavLink>
-        </div>
-
-        {/* nav tabs  */}
-        <div className="container-fluid d-flex flex-row mb-3">
+      <div className="row admin-style">
+        <div className="nav-admin text-center">
+          <div className="text-center" id="go-homepage">
+            <i className="fas fa-arrow-alt-circle-left fw text-center" /> Về
+            trang chủ
+          </div>
           <div
-            className="nav flex-column nav-pills col-2"
+            className="nav flex-column nav-pills"
             id="v-pills-tab"
             role="tablist"
             aria-orientation="vertical"
           >
+            <a
+              className="nav-link"
+              id="v-pills-ads-tab"
+              data-toggle="pill"
+              href="#v-pills-ads"
+              role="tab"
+              aria-controls="v-pills-ads"
+              aria-selected="false"
+            >
+              Khuyến mãi
+            </a>
             <a
               className="nav-link active"
               id="v-pills-order-tab"
@@ -49,17 +58,6 @@ class Admin extends Component {
             </a>
             <a
               className="nav-link"
-              id="v-pills-ads-tab"
-              data-toggle="pill"
-              href="#v-pills-ads"
-              role="tab"
-              aria-controls="v-pills-ads"
-              aria-selected="false"
-            >
-              Khuyến mãi
-            </a>
-            <a
-              className="nav-link"
               id="v-pills-user-tab"
               data-toggle="pill"
               href="#v-pills-user"
@@ -70,43 +68,11 @@ class Admin extends Component {
               Người dùng
             </a>
           </div>
-
-          {/* tabs */}
-          <div className="tab-content col-10" id="v-pills-tabContent">
-            <div
-              className="tab-pane fade show active"
-              id="v-pills-order"
-              role="tabpanel"
-              aria-labelledby="v-pills-order-tab"
-            >
-              <OrderManagement />
-            </div>
-
-            <div
-              className="tab-pane fade"
-              id="v-pills-product"
-              role="tabpanel"
-              aria-labelledby="v-pils-product-tab"
-            >
-            
-            </div>
-
-            <div
-              className="tab-pane fade"
-              id="v-pills-ads"
-              role="tabpanel"
-              aria-labelledby="v-pills-ads-tab"
-            >
-            </div>
-
-            <div
-              className="tab-pane fade"
-              id="v-pills-user"
-              role="tabpanel"
-              aria-labelledby="v-pills-user-tab"
-            >
-              <UserManagement />
-            </div>
+        </div>
+        <div>
+          <div className="title-page-admin text-center">TRANG ADMIN</div>
+          <div>
+            <AdsManagement/>
           </div>
         </div>
       </div>

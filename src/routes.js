@@ -1,22 +1,32 @@
-import Admin from "./Components/Admin/Admin";
-import Home from './App/Homepage'
+import Admin from "./App/Adminpage";
+import Home from "./App/Homepage";
 import NotFound from "Components/NotFound/index";
 const routes = [
   {
     path: "/",
     exact: true,
-    main : ()=> <Home/>
+    main: () => <Home />,
   },
   {
-      path: '/admin',
-      exact: true,
-      main : ()=> <Admin/>
+    path: "/home",
+    exact: true,
+    main: () => <Home />,
   },
   {
-    path: '',
+    path: "/admin",
+    exact: true,
+    main: () => <Admin />,
+  },
+  {
+    path: "",
     exact: false,
-    main : ()=> <NotFound/>
-}
+    main: () => <NotFound />,
+  },
 ];
 
-export default routes
+const amdinRoutes = [
+  {
+    path: '/admin/:funtionId'
+  }
+]
+export default routes;
