@@ -1,26 +1,19 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
-import OrderManagement from "./OrderManagement";
-import UserManagement from "./UserManagement";
-import AdsManagement from "./AdsManagement";
 import "./Admin.css";
-import { Route, Switch } from "react-router-dom";
+import { NavLink,Route, Switch } from "react-router-dom";
 import { amdinRoutes } from "../../routes";
 
 class AdminFunctions extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   componentDidMount() {
     let path = window.location.pathname;
     let url = window.location.href;
     if (
-      path != "/admin" &&
-      path != "/admin/ads" &&
-      path != "/admin/orders" &&
-      path != "/admin/products" &&
-      path != "/admin/users"
+      path !== "/admin" &&
+      path !== "/admin/ads" &&
+      path !== "/admin/orders" &&
+      path !== "/admin/products" &&
+      path !==   "/admin/users"
     ) {
       window.location.assign(url.slice(0, url.indexOf("admin")) + "error");
     }
@@ -44,7 +37,6 @@ class AdminFunctions extends Component {
   };
 
   render() {
-    console.log(this.props.match);
     return (
       <div className="row admin-style">
         <div className="nav-admin text-center">
@@ -125,43 +117,3 @@ class AdminFunctions extends Component {
 }
 
 export default AdminFunctions;
-
-// class Topics extends React.Component {
-//     render( ) {
-//       return (
-//         <div>
-//           <h2>Topics</h2>
-//           <ul>
-//             <li>
-//               <NavLink to={`${this.props.match.url}/rendering`}>
-//                 Rendering with React
-//               </NavLink>
-//             </li>
-//             <li>
-//               <NavLink to={`${this.props.match.url}/components`}>Components</NavLink>
-//             </li>
-//             <li>
-//               <NavLink to={`${this.props.match.url}/props-v-state`}>
-//                 Props v. State
-//               </NavLink>
-//             </li>
-//           </ul>
-
-//           <Switch>
-//             <Route
-//               path={miniRoutes.path}
-//               component = {miniRoutes.main}/>
-//             <Route
-//               exact
-//               path={miniRoutes.path}
-//               render={() =>
-//                 <h3>
-//                   Please select a topic.
-//                 </h3>
-//               }
-//               />
-//           </Switch>
-//         </div>
-//       );
-//     }
-//   }

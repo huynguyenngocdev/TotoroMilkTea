@@ -1,248 +1,234 @@
 import React, { Component } from "react";
-
 import $ from "jquery";
+import callAPI from "../../API/callAPI";
+
 class AdsManagement extends Component {
   constructor(props) {
     super(props);
     this.state = {
       ads: null,
+      imageAds: "",
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleFileImageAdsInput = this.handleFileImageAdsInput.bind(this);
   }
 
   componentDidMount() {
-    // axios({
-    //   method: "GET",
-    //   url: URL + "ads",
-    //   data: null,
-    // })
-    //   .then((res) => {
-    //     this.setState({
-    //       ads: res.data,
-    //     });
-    //   })
-    //   .catch((err) => {});
-    // function dateChange(){
-    //   document.getElementById('a').innerHTML = new Date(document.getElementById('birthdaytime').value).toDateString()
-    //   }
-    //   window.addEventListener('load', () => {
-    //     const now = new Date();
-    //     //document.getElementById('a').innerHTML = now.toGMTString()
-    //      document.getElementById('birthdaytime').value = (now.toISOString()).substring(0, ((now.toISOString()).indexOf("T")|0) + 6|0);
-    //   });
+    callAPI("ads", "GET", null).then((res) => {
+      this.setState({
+        ads: res.data,
+      });
+    });
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    this.updateAds();
-  }
+    let imageAds = this.state.ads.image;
+    if (
+      this.state.imageAds !== undefined ||
+      this.state.imageAds !== null
+    ) {
+      imageAds = this.state.imageAds;
+    }
 
-  updateAds = () => {
     let data = {
       datetime: $("#datetimeAds").val(),
-      image: $("#imageAds").val(),
+      image: imageAds,
       textStandstill: $("#textStandstillAds").val(),
       textRun: $("#textRunAds").val(),
       discount: $("#discountAds").val(),
       status: $("#statusAds").val(),
+      updateAt: this.state.ads.updateAt
     };
-    // axios({
-    //   method: "PUT",
-    //   url: URL + "ads",
-    //   data: data,
-    // }).then((res) => {
-    //   alert("Update success");
-    // });
-  };
 
-  handleFileInput = (e) => {
-    const file = e.target.files[0];
+    console.log(data);
+
+    callAPI('ads','PUT',data).then((res) => {
+      console.log(res);
+    });
+  }
+
+  // preview image before upload
+  handleFileImageAdsInput = () => {
+    const preview = document.getElementById("newImageAds");
+    const file = document.getElementById("imageAdsInput").files[0];
+    const reader = new FileReader();
+
+    reader.addEventListener(
+      "load",
+      () => {
+        // convert image file to base64 string
+        preview.src = reader.result;
+        this.setState({ imageAds: reader.result });
+      },
+      false
+    );
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
   };
 
   render() {
-    console.log(this.state.ads);
-    return (
-      <div>
-        <button
-          type="button"
-          className="btn btn-primary"
-          data-toggle="modal"
-          data-target="#updateAds"
-        >
-          Cập nhật
-        </button>
-        <div
-          className="modal fade"
-          id="updateAds"
-          tabIndex={-1}
-          role="dialog"
-          aria-labelledby="modelTitleId"
-          aria-hidden="true"
-        >
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Modal title</h5>
-                <button
-                  type="button"
-                  className="close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">Đóng</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                <form className="was-validated" onSubmit={this.handleSubmit}>
-                  <div className="form-group">
-                    <input
-                      type="datetime-local"
-                      className="form-control"
-                      id="datetimeAds"
-                      min={
-                        new Date().getFullYear() +
-                        "-" +
-                        (new Date().getMonth() + 1) +
-                        "-" +
-                        new Date().getDate() +
-                        "T00:00"
-                      }
-                      max="2030-12-31T00:00"
-                      required
-                    />
-                    <div className="invalid-feedback">
-                      Không được để trống ô này.
-                    </div>
-                  </div>
+    if (this.state.ads != null) {
+      return (
+        <div className="container" style={{ marginTop: "15px" }}>
+          <form
+            encType="multipart/form-data"
+            className="was-validated"
+            onSubmit={this.handleSubmit}
+          >
+            {/* datetime */}
+            <div className="form-group row">
+              <label htmlFor="datetimeAds" className="col-sm-2 col-form-label">
+                Hạn khuyến mãi:
+              </label>
+              <input
+                type="datetime-local"
+                className="form-control col-sm-5"
+                id="datetimeAds"
+                min={new Date()
+                  .toISOString()
+                  .substring(
+                    0,
+                    ((new Date().toISOString().indexOf("T") | 0) + 6) | 0
+                  )}
+                max="2030-12-31T00:00"
+                defaultValue={new Date()
+                  .toISOString()
+                  .substring(
+                    0,
+                    ((new Date().toISOString().indexOf("T") | 0) + 6) | 0
+                  )}
+                required
+              />
+              <div className="invalid-feedback">Không được để trống ô này.</div>
+            </div>
+            {/* image */}
+            <div className="form-group row">
+              <label htmlFor="imageAds" className="col-sm-2 col-form-label">
+                Ảnh quảng cáo:
+              </label>
 
-                  <div className="form-group">
-                    <div className="input-group">
-                      <input
-                        type="file"
-                        className="form-control"
-                        name="imageAds"
-                        id="imageAds"
-                        onChange={this.handleFileInput}
-                        required
-                      />
-                      <div className="invalid-feedback">
-                        Không được để trống ô này.
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="form-group">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="textStandstillAds"
-                      value={
-                        this.state.ads != null
-                          ? this.state.ads.textStandstill
-                          : ""
-                      }
-                      required
-                    />
-                    <div className="invalid-feedback">
-                      Không được để trống ô này.
-                    </div>
-                  </div>
-
-                  <div className="form-group">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="textRunAds"
-                      value={
-                        this.state.ads != null ? this.state.ads.textRun : ""
-                      }
-                      required
-                    />
-                    <div className="invalid-feedback">
-                      Không được để trống ô này.
-                    </div>
-                  </div>
-
-                  <div className="form-group">
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="discountAds"
-                      value={
-                        this.state.ads != null ? this.state.ads.discount : 0
-                      }
-                      max={50}
-                      min={0}
-                      required
-                    />
-                    <div className="invalid-feedback">
-                      Không được để trống ô này.
-                    </div>
-                  </div>
-
-                  <div className="form-group">
-                    <input
-                      type="checkbox"
-                      className="form-control"
-                      id="statusAds"
-                      onChange={() => {
-                        $("#statusAds").is(":checked") == true
-                          ? $("#status").html("Đang bật")
-                          : $("#status").html("Đang tắt");
-                      }}
-                    />
-
-                    <span id="status">...</span>
-
-                    <div className="invalid-feedback">
-                      Không được để trống ô này.
-                    </div>
-                  </div>
-
-                  <button type="submit" className="btn btn-danger btn-rounded">
-                    Cập nhật
-                  </button>
-                </form>
+              <div className="input-group col-sm-10">
+                <img
+                  src={this.state.ads.image}
+                  alt="Ảnh cũ"
+                  id="oldImageAds"
+                  width={"100px"}
+                />
+                HOẶC:&nbsp;&nbsp;
+                <input
+                  type="file"
+                  id="imageAdsInput"
+                  onChange={this.handleFileImageAdsInput}
+                />
+                <img
+                  src={this.state.imageAds}
+                  alt="Ảnh mới"
+                  id="newImageAds"
+                  width={"100px"}
+                />
               </div>
             </div>
-          </div>
-        </div>
+            {/* text standstill */}
+            <div className="form-group row">
+              <label
+                htmlFor="textStandstillAds"
+                className="col-sm-2 col-form-label"
+              >
+                Phần chữ đứng yên
+              </label>
+              <textarea
+                className="form-control col-sm-10"
+                id="textStandstillAds"
+                rows="3"
+                defaultValue={this.state.ads.textStandstill}
+                required
+              ></textarea>
 
-        <table className="table text-center">
-          <thead>
-            <tr>
-              <th>Thời gian kết thúc khuyến mãi</th>
-              <th>Ảnh quảng cáo</th>
-              <th>Chữ ở banner(đứng yên)</th>
-              <th>Chữ chạy liên tục</th>
-              <th>Giảm giá(%)</th>
-              <th>Trạng thái quảng cáo</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.ads != null ? (
-              <tr>
-                <td>{this.state.ads.datetime}</td>
-                <td>
-                  <img src={this.state.ads.image} width={"50px"} />
-                </td>
-                <td>{this.state.ads.textStandstill}</td>
-                <td>{this.state.ads.textRun}</td>
-                <td>{this.state.ads.discount}</td>
-                <td>
-                  {this.state.ads.status == true ? "Đang bật" : "Đang tắt"}
-                </td>
-              </tr>
-            ) : (
-              <tr></tr>
-            )}
-          </tbody>
-        </table>
-      </div>
-    );
+              <div className="invalid-feedback col-sm-4">
+                <i
+                  className="fa fa-exclamation-triangle"
+                  aria-hidden="true"
+                ></i>
+              </div>
+              <div className="invalid-feedback col-sm-8">
+                Không được để trống ô này.
+              </div>
+            </div>
+            {/* text run */}
+            <div className="form-group row">
+              <label htmlFor="textRunAds" className="col-sm-2 col-form-label">
+                Phần chữ chuyển động
+              </label>
+              <textarea
+                className="form-control col-sm-10"
+                id="textRunAds"
+                rows="3"
+                defaultValue={this.state.ads.textRun}
+                required
+              />
+
+              <div className="invalid-feedback col-sm-4">
+                <i
+                  className="fa fa-exclamation-triangle"
+                  aria-hidden="true"
+                ></i>
+              </div>
+              <div className="invalid-feedback col-sm-8">
+                Không được để trống ô này.
+              </div>
+            </div>
+            {/* discount */}
+            <div className="form-group row">
+              <label htmlFor="discountAds" className="col-sm-2 col-form-label">
+                Giảm giá(%)
+              </label>
+              <input
+                type="number"
+                className="form-control col-sm-2"
+                id="discountAds"
+                defaultValue={this.state.ads.discount}
+                max={50}
+                min={0}
+                required
+              />
+              <div className="invalid-feedback col-sm-8">
+                <i
+                  className="fa fa-exclamation-triangle"
+                  aria-hidden="true"
+                ></i>
+                Không được để trống ô này.
+              </div>
+            </div>
+            {/* status ads */}
+            <div className="form-group row">
+              <label htmlFor="statusAds" className="col-sm-2 col-form-label">
+                Trạng thái quảng cáo:
+              </label>
+              <select
+                className="form-control col-sm-4"
+                id="statusAds"
+                defaultValue={this.state.ads.status}
+              >
+                <option value={true}>Đang bật</option>
+                <option value={false}>Đang tắt</option>
+              </select>
+            </div>
+            {/* btn submit */}
+            <div className="text-center">
+              <button type="submit" className="btn btn-danger btn-rounded">
+                <i className="fa fa-sync-alt fw" aria-hidden="true"></i>
+                Cập nhật
+              </button>
+            </div>
+          </form>
+        </div>
+      );
+    } else {
+      return <div></div>;
+    }
   }
 }
-
-AdsManagement.propTypes = {};
-
 export default AdsManagement;

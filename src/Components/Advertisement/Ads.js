@@ -67,7 +67,7 @@ const Ads = () => {
       <div className="container text-run">
         <marquee behavior="scroll" scrollamount="12">
           <h3>
-            <span className='text-jump'>Khuyến mãi</span> tưng bừng nhân dịp 30/4 và 1/5! Giảm giá cực sốc! Giảm
+            <span className='text-jump'>Khuyến mãi rộn ràng!</span> Khuyến mãi tưng bừng nhân dịp 30/4 và 1/5! Giảm giá cực sốc! Giảm
             tới 40% cho mỗi cốc trà sữa thơm ngon!
           </h3>
         </marquee>
