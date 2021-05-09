@@ -49,16 +49,14 @@
   background-image: linear-gradient(
     90deg,
     #fc32d3 0%,
-    #fbfe17 20%,
-    #0de1f6 40%,
-    #26fddb 60%,
-    #f94b80 80%,
-    #fc32d3 100%
+    #fbfe17 30%,
+    #0de1f6 60%,
+    #f94b80 90%
   );
   position: absolute;
   top: 80%;
   right: 40%;
-  animation: slidebg 5s linear infinite;
+  animation: changeBgButton 5s linear infinite;
 }
 
 .slide_bg1 .btnToOrder:after {
@@ -69,7 +67,7 @@
   justify-content: center;
 }
 
-@keyframes slidebg {
+@keyframes changeBgButton {
   from {
     background-position: -20vw;
   }

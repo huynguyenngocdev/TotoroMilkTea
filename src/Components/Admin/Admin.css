@@ -1,17 +1,18 @@
 .admin-style {
     display: grid;
     grid-template-columns: 15% 85%;
+    color: #333333;
 }
 
 .admin-style .nav-admin {
-    background-color: #f8b7cd;
-    color: white;
+    background-color: #1e282c;
     font-size: 25px;
+    height: 100%;
 }
 
 .admin-style #go-homepage {
+    text-decoration: none;
     font-size: 25px;
-    padding: 40px;
 }
 
 .admin-style .title-page-admin {

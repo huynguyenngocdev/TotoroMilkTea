@@ -1,6 +1,12 @@
 import Admin from "./App/Adminpage";
 import Home from "./App/Homepage";
 import NotFound from "Components/NotFound/index";
+
+import AdsManagement from "./Components/Admin/AdsManagement";
+import OrderManagement from "Components/Admin/OrderManagement";
+import ProductManagement from "Components/Admin/ProductManagement";
+import UserManagement from "Components/Admin/UserManagement";
+
 const routes = [
   {
     path: "/",
@@ -14,11 +20,11 @@ const routes = [
   },
   {
     path: "/admin",
-    exact: true,
-    main: () => <Admin />,
+    exact: false,
+    main: ({ match }) => <Admin match={match} />,
   },
   {
-    path: "",
+    path: "*",
     exact: false,
     main: () => <NotFound />,
   },
@@ -26,7 +32,30 @@ const routes = [
 
 const amdinRoutes = [
   {
-    path: '/admin/:funtionId'
+    path: "/admin/",
+    exact: true,
+    main: () => <AdsManagement />,
+  },
+  {
+    path: "/admin/ads",
+    exact: true,
+    main: () => <AdsManagement />,
+  },
+  {
+    path: "/admin/orders",
+    exact: true,
+    main: () => <OrderManagement />,
+  },
+  {
+    path: "/admin/products",
+    exact: true,
+    main: () => <ProductManagement />,
+  },
+  {
+    path: "/admin/users",
+    exact: true,
+    main: () => <UserManagement />,
   }
-]
-export default routes;
+];
+
+export { routes, amdinRoutes };

@@ -1,9 +1,9 @@
 import React from 'react';
-import Admin from '../Components/Admin/Admin'
+import AdminFunctions from '../Components/Admin/AdminFunctions'
 function Adminpage(props) {
     return (
         <div>
-            {/* <Admin/> */}
+            <AdminFunctions match = {props.match}/>
         </div>
     );
 }

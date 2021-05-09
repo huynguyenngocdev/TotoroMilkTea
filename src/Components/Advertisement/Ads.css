@@ -41,10 +41,24 @@
 .text-run {
   background-color: #ffff00;
   color: #fd0100;
+  
+  display: flex;
+  justify-content: center;
 }
 
-.text-run .marquee {
-  background: red;
-  animation: rightThenLeft 1s linear;
-  overflow: hidden;
+.text-jump {
+  font-size: 40px;
+  position: relative;
+  animation: jump 0.5s ease infinite alternate;
+}
+
+@keyframes jump {
+  0% {
+    top: 0px;
+  }
+  100% {
+    top: -5px;
+    text-shadow: 0 1px 0 #ee4545f1, 0 2px 0 #ee4545f1, 0 3px 0 #ee4545f1,
+      0 4px 0 #ee4545f1, 0 5px 0 #ee4545f1, 0 50px 25px rgba(192, 19, 19, 0.4);
+  }
 }
