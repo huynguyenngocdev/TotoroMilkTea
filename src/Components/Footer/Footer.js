@@ -53,8 +53,6 @@ class Footer extends React.Component {
                 </h6>
                 <p>Nhập Email đăng ký nhận thông tin</p>
                 <form
-                  action="Home/SendMail"
-                  method="post"
                   className="newsletter"
                 >
                   <input
@@ -63,14 +61,12 @@ class Footer extends React.Component {
                     name="emailReceiveInfor"
                     placeholder="Nhập Email...."
                   />
-                  <a href>
                     <button
                       type="submit"
                       className="btn btn-sm btn-outline-light"
                     >
                       Đăng ký
                     </button>
-                  </a>
                 </form>
               </div>
             </div>
@@ -88,7 +84,7 @@ class Footer extends React.Component {
               <div className="col-md-5">
                 <ul className="social-icon">
                   <li>
-                    <a href="mailto:huy.nguyen22@student.passerellesnumeriques.org" className="google-plus"S>email</a>
+                    <a href="mailto:huy.nguyen22@student.passerellesnumeriques.org" className="google-plus">email</a>
                   </li>
                   <li>
                     <a

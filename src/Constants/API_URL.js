@@ -1,5 +1,6 @@
 // api on heroku
-// export default "http://totoromilkteaapi.herokuapp.com/api"
+//const  API_URL = "http://totoromilkteaapi.herokuapp.com/api"
 
 // json server
-export default 'http://localhost:4000/api'
+const API_URL = 'http://localhost:4000/api'
+export default API_URL

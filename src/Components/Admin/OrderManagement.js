@@ -5,10 +5,12 @@ class OrderManagement extends Component {
     super(props);
   }
 
+
+
   render() {
     return (
       <div>
-        <div>don hang</div>
+        
       </div>
     );
   }

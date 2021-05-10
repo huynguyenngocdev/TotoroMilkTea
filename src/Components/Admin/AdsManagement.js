@@ -7,7 +7,7 @@ class AdsManagement extends Component {
     super(props);
     this.state = {
       ads: null,
-      imageAds: "",
+      imageAds: null,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleFileImageAdsInput = this.handleFileImageAdsInput.bind(this);
@@ -25,26 +25,25 @@ class AdsManagement extends Component {
     event.preventDefault();
     let imageAds = this.state.ads.image;
     if (
-      this.state.imageAds !== undefined ||
+      this.state.imageAds !== undefined &&
       this.state.imageAds !== null
     ) {
       imageAds = this.state.imageAds;
     }
-
+    
     let data = {
       datetime: $("#datetimeAds").val(),
       image: imageAds,
       textStandstill: $("#textStandstillAds").val(),
       textRun: $("#textRunAds").val(),
       discount: $("#discountAds").val(),
-      status: $("#statusAds").val(),
-      updateAt: this.state.ads.updateAt
+      status:  Boolean($("#statusAds").val()),
+      updateAt:  this.state.ads.updateAt
     };
 
-    console.log(data);
-
     callAPI('ads','PUT',data).then((res) => {
-      console.log(res);
+      //console.log(res);
+      alert("Cập nhật quảng cáo thành công")
     });
   }
 
@@ -94,12 +93,7 @@ class AdsManagement extends Component {
                     ((new Date().toISOString().indexOf("T") | 0) + 6) | 0
                   )}
                 max="2030-12-31T00:00"
-                defaultValue={new Date()
-                  .toISOString()
-                  .substring(
-                    0,
-                    ((new Date().toISOString().indexOf("T") | 0) + 6) | 0
-                  )}
+                defaultValue={this.state.ads.datetime}
                 required
               />
               <div className="invalid-feedback">Không được để trống ô này.</div>

@@ -39,8 +39,9 @@
 }
 
 .text-run {
-  background-color: #ffff00;
-  color: #fd0100;
+  background-color: #f46c02;
+  color:#fdfdfd;
+  border-radius: 10px;
   
   display: flex;
   justify-content: center;
@@ -58,7 +59,7 @@
   }
   100% {
     top: -5px;
-    text-shadow: 0 1px 0 #ee4545f1, 0 2px 0 #ee4545f1, 0 3px 0 #ee4545f1,
-      0 4px 0 #ee4545f1, 0 5px 0 #ee4545f1, 0 50px 25px rgba(192, 19, 19, 0.4);
+    text-shadow: 0 1px 0 #ee4423, 0 2px 0 #ee4423, 0 3px 0 #ee4423,
+      0 4px 0 #ee4423, 0 5px 0 #ee4423,0 6px 0 #ee4423,0 7px 0 #ee4423, 0 50px 25px rgba(247, 120, 1, 0.562);
   }
 }

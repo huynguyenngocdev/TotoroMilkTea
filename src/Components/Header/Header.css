@@ -24,6 +24,7 @@
   background-position: center;
   margin: 20px 0;
   z-index: 0;
+  position: relative;
 }
 
 .slide_bg2 {
@@ -31,8 +32,9 @@
   justify-content: center;
   background-image: url("../../assets/images/background/bg0_slider.png");
   background-repeat: no-repeat;
-  background-position: center bottom;
-  background-size: 480px 480px;
+  background-position-x: center;
+  background-position-y: bottom;
+  background-size: 500px 500px;
 }
 
 .slide_bg2 .img-slider {
@@ -43,6 +45,12 @@
 }
 
 .slide_bg1 .btnToOrder {
+  position: absolute;
+  top: 80%;
+  left: 60%;
+  transform: translate(-80%, -60%);
+  -ms-transform: translate(-80%, -60%);
+
   border-radius: 20px;
   padding: 5px;
   outline: none;
@@ -53,9 +61,6 @@
     #0de1f6 60%,
     #f94b80 90%
   );
-  position: absolute;
-  top: 80%;
-  right: 40%;
   animation: changeBgButton 5s linear infinite;
 }
 
