@@ -19,31 +19,34 @@ class AdsManagement extends Component {
         ads: res.data,
       });
     });
+
+    callAPI("auth", "POST", data).then((res) => {
+      this.setState({
+        ads: res.data,
+      });
+    });
   }
 
   handleSubmit(event) {
     event.preventDefault();
     let imageAds = this.state.ads.image;
-    if (
-      this.state.imageAds !== undefined &&
-      this.state.imageAds !== null
-    ) {
+    if (this.state.imageAds !== undefined && this.state.imageAds !== null) {
       imageAds = this.state.imageAds;
     }
-    
+
     let data = {
       datetime: $("#datetimeAds").val(),
       image: imageAds,
       textStandstill: $("#textStandstillAds").val(),
       textRun: $("#textRunAds").val(),
       discount: $("#discountAds").val(),
-      status:  Boolean($("#statusAds").val()),
-      updateAt:  this.state.ads.updateAt
+      status: Boolean($("#statusAds").val()),
+      updateAt: this.state.ads.updateAt,
     };
 
-    callAPI('ads','PUT',data).then((res) => {
+    callAPI("ads", "PUT", data).then((res) => {
       //console.log(res);
-      alert("Cập nhật quảng cáo thành công")
+      alert("Cập nhật quảng cáo thành công");
     });
   }
 
