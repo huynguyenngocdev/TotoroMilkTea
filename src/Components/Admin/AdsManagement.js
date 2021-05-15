@@ -13,18 +13,18 @@ class AdsManagement extends Component {
     this.handleFileImageAdsInput = this.handleFileImageAdsInput.bind(this);
   }
 
-  componentDidMount() {
-    callAPI("ads", "GET", null).then((res) => {
-      this.setState({
+  async componentDidMount() {
+    await callAPI("ads", "GET", null).then((res) => {
+      this.setState(() => ({
         ads: res.data,
-      });
+      }));
     });
 
-    callAPI("auth", "POST", data).then((res) => {
-      this.setState({
-        ads: res.data,
-      });
-    });
+    callAPI(`get_image/${this.state.ads.image}`, "GET", null).then(
+      (res) => {
+        this.setState(() => ({ imageAds: res.data.image }));
+      }
+    );
   }
 
   handleSubmit(event) {

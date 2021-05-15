@@ -14,17 +14,23 @@ class Ads extends Component {
         timerMinutes: "00",
         timerSeconds: "00",
       },
+      imageAds: "",
     };
   }
 
-  componentDidMount() {
-    callAPI("ads", "GET", null).then((res) => {
+  async componentDidMount() {
+    await callAPI("ads", "GET", null).then((res) => {
       if (res.data.status === true) {
-        this.setState({
+        this.setState((state) => ({
           adsInfor: res.data,
-        });
+        }));
       }
     });
+    
+    callAPI(`get_image/${this.state.adsInfor.image}`, "GET", null).then((res) => {
+      this.setState(()=>({imageAds: res.data.image }))
+    });
+
     this.timerID = setInterval(() => this.tick(), 1000);
   }
 
@@ -72,7 +78,7 @@ class Ads extends Component {
             </div>
             <div className="container ads">
               <img
-                src={this.state.adsInfor.image}
+                src={this.state.imageAds}
                 className="img-ads"
                 alt="Anh quang cao"
               />

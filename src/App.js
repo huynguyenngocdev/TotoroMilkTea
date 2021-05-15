@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import {routes} from "./routes";
+import { routes } from "./routes";
 
 class App extends React.Component {
   showContent = (routes) => {
@@ -19,6 +19,7 @@ class App extends React.Component {
     }
     return result;
   };
+
   render() {
     return (
       <Router>

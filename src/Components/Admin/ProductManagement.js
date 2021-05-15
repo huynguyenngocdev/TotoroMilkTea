@@ -12,11 +12,11 @@ class ProductManagement extends Component {
   }
 
   componentDidMount() {
-    callAPI("ads", "GET", null).then((res) => {
-      this.setState({
-        ads: res.data,
-      });
-    });
+    // callAPI("ads", "GET", null).then((res) => {
+    //   this.setState({
+    //     ads: res.data,
+    //   });
+    // });
   }
 
   handleSubmit(event) {
