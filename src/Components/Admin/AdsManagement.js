@@ -19,12 +19,10 @@ class AdsManagement extends Component {
         ads: res.data,
       }));
     });
-
-    callAPI(`get_image/${this.state.ads.image}`, "GET", null).then(
-      (res) => {
-        this.setState(() => ({ imageAds: res.data.image }));
-      }
-    );
+    
+    await callAPI(`get_image/${this.state.ads.image}`, "GET", null).then((res) => {
+      this.setState(() => ({ imageAds: res.data.image }));
+    });
   }
 
   handleSubmit(event) {
@@ -33,7 +31,9 @@ class AdsManagement extends Component {
     if (this.state.imageAds !== undefined && this.state.imageAds !== null) {
       imageAds = this.state.imageAds;
     }
-
+    console.log($("#statusAds").val());
+    let status = $("#statusAds").val()
+    console.log(status);
     let data = {
       datetime: $("#datetimeAds").val(),
       image: imageAds,
@@ -43,6 +43,7 @@ class AdsManagement extends Component {
       status: Boolean($("#statusAds").val()),
       updateAt: this.state.ads.updateAt,
     };
+    
 
     callAPI("ads", "PUT", data).then((res) => {
       //console.log(res);
@@ -109,9 +110,9 @@ class AdsManagement extends Component {
 
               <div className="input-group col-sm-10">
                 <img
-                  src={this.state.ads.image}
-                  alt="Ảnh cũ"
-                  id="oldImageAds"
+                  src={this.state.imageAds}
+                  alt="Ảnh quảng cáo"
+                  id="newImageAds"
                   width={"100px"}
                 />
                 HOẶC:&nbsp;&nbsp;
@@ -119,12 +120,6 @@ class AdsManagement extends Component {
                   type="file"
                   id="imageAdsInput"
                   onChange={this.handleFileImageAdsInput}
-                />
-                <img
-                  src={this.state.imageAds}
-                  alt="Ảnh mới"
-                  id="newImageAds"
-                  width={"100px"}
                 />
               </div>
             </div>
@@ -209,8 +204,8 @@ class AdsManagement extends Component {
                 id="statusAds"
                 defaultValue={this.state.ads.status}
               >
-                <option value={true}>Đang bật</option>
-                <option value={false}>Đang tắt</option>
+                <option value={1}>Đang bật</option>
+                <option value={0}>Đang tắt</option>
               </select>
             </div>
             {/* btn submit */}
