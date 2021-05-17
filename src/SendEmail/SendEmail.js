@@ -9,10 +9,9 @@ const SendEmail = (to_email, message) => {
     </Email>
   );
   const variables = {
-    message_html: message,
+    message_html: message_html,
     to_email: to_email,
   };
-  console.log(variables);
   //params: email_serviceId, templateId,variables(have in template Email)
   return window.emailjs.send("shop_email", "totoro_email", variables);
 };

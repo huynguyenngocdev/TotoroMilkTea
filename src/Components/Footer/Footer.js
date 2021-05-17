@@ -12,7 +12,7 @@ class Footer extends React.Component {
 
   handleSubmitReceiveInfor(e) {
     e.preventDefault();
-    if ($("#emailReceiveNewInfor").val() != "") {
+    if ($("#emailReceiveNewInfor").val() !== "") {
       let emailReceiveNewInfor = $("#emailReceiveNewInfor").val();
       let contentEmail =
         "Cảm ơn quý khách đã đăng ký để nhận thông tin mới nhất từ shop.";
