@@ -15,7 +15,7 @@ class Ads extends Component {
         timerSeconds: "00",
       },
       imageAds: "",
-      deadline: -1
+      deadline: -1,
     };
   }
 
@@ -27,10 +27,12 @@ class Ads extends Component {
         }));
       }
     });
-    
-    callAPI(`get_image/${this.state.adsInfor.image}`, "GET", null).then((res) => {
-      this.setState(()=>({imageAds: res.data.image }))
-    });
+
+    callAPI(`get_image/${this.state.adsInfor.image}`, "GET", null).then(
+      (res) => {
+        this.setState(() => ({ imageAds: res.data.image }));
+      }
+    );
 
     this.timerID = setInterval(() => this.tick(), 1000);
   }
@@ -43,7 +45,7 @@ class Ads extends Component {
     const countdownDate = new Date(this.state.adsInfor.datetime).getTime();
     const now = new Date().getTime();
     const distance = countdownDate - now;
-    this.setState(()=>({deadline: distance}))
+    this.setState(() => ({ deadline: distance }));
     if (distance < 0) {
       // stop timer
       clearInterval(this.timerID);
@@ -68,7 +70,7 @@ class Ads extends Component {
   render() {
     return (
       <div>
-        {(this.state.adsInfor.status === true && this.state.deadline > 0) ? (
+        {this.state.adsInfor.status === true && this.state.deadline > 0 ? (
           <div>
             <div className="container text-run">
               <marquee behavior="scroll" scrollamount="12">
