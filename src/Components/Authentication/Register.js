@@ -1,11 +1,20 @@
 import React, { Component } from "react";
 import $ from "jquery";
+import SendEmail from "../../Features/SendEmail"
+import callAPI from "../../API/callAPI";
+
 class Register extends Component {
+
   constructor(props) {
     super(props);
     this.state = {};
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.createAccount = this.createAccount.bind(this)
+    // this.checkCode = this.checkCode.bind(this);
+  }
+ 
+  randomCode = (min, max) => {
+    return Math.floor(Math.random() * (max - min)) + min;
   }
 
   handleChange(event) {
@@ -14,14 +23,67 @@ class Register extends Component {
     this.setState({ [key]: val });
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
-    alert("Đăng ký thành công");
+  async createAccount(e) {
+    e.preventDefault()
+    let code = this.randomCode(10000, 99999)
+    console.log(code);
+    let email = this.state.email;
+    let idLog = this.state.username;
+    let resEmail = `users?email=${email}`;
+    let resIdLog = `users?username=${idLog}`;
+    let x=false,y=false;
+    await callAPI(resIdLog, "GET", null).then((res) => {
+      let check = res.data;
+      if(check.length===0){
+        $("#invalid-user").css("color", "#20c997").html("Notice: Tên đăng nhập hợp lệ! ")
+        x=true;
+      }else{
+        $("#invalid-user").css("color", "red").html("Notice: Tên đăng nhập này đã được sử dụng! ")
+      }
+    }).catch(
+     err=>{
+      alert("Error: Something is wrong! Maybe the API is having problems");
+      console.log("Error: Something is wrong! Maybe the API is having problems");
+     },
+    );
+    await callAPI(resEmail, "GET", null).then((res) => {
+      let check = res.data;
+      if(check.length===0){
+        $("#invalid-email").css("color", "#20c997").html("Notice: Email hợp lệ! ")
+       y=true;
+      }else{     
+        $("#invalid-email").css("color", "red").html("Notice: Email này đã được sử dụng! ")
+      }
+    }).catch(
+     err=>{
+      alert("Error: Something is wrong! Maybe the API is having problems");
+      console.log("Error: Something is wrong! Maybe the API is having problems");
+     },
+    );
+    if(x&&y){
+      let content = `Mã xác nhận của bạn là:${code}`
+      SendEmail(email, content).then(() => { alert('Gửi mail thành công')
+      let a = prompt("Nhập Mã Xác nhận đã được gửi đến email")
+      if(a===code){
+        alert("Code chính xác")
+        let user=this.state;
+        console.log(user);
+     callAPI("users", "POST", user).then((res) => {
+      localStorage.setItem('currentAccount',JSON.stringify(user));
+      window.location.reload()
+     }).catch(err=>alert("Error: Something is wrong! Maybe the API is having problems"));
+      }else alert("Sai code")
+    }).catch(()=>alert("Gửi mail thất bại"))
+        
+    }
+
+  
+
   }
+
 
   showPasswordR = (event) => {
     event.preventDefault();
-    //console.log(document.getElementById("pwdR").getAttribute('type'));
     if ($("#pwdR").attr("type") === "text") {
       $("#pwdR").attr("type", "password");
       $("#eye-icon-register").addClass("fa-eye-slash");
@@ -62,7 +124,7 @@ class Register extends Component {
               </button>
             </div>
             <div className="modal-body">
-              <form className="was-validated">
+              <form className="was-validated" onSubmit={this.createAccount}>
                 <div className="form-group">
                   <input
                     type="text"
@@ -70,6 +132,7 @@ class Register extends Component {
                     name="name"
                     placeholder="Họ và tên"
                     required
+                    onChange={this.handleChange}
                   />
                   <div className="invalid-feedback">
                     Không được để trống ô này.
@@ -83,10 +146,12 @@ class Register extends Component {
                     name="username"
                     placeholder="Tên đăng nhập"
                     required
+                    onChange={this.handleChange}
                   />
                   <div className="invalid-feedback">
                     Không được để trống ô này.
                   </div>
+                  <div id="invalid-user"></div>
                 </div>
 
                 <div className="form-group">
@@ -96,12 +161,14 @@ class Register extends Component {
                     name="email"
                     placeholder="Email"
                     required
+                    onChange={this.handleChange}
                   />
                   <div className="invalid-feedback">
                     Không được để trống ô này.
                   </div>
-                </div>
-
+                  <div id="invalid-email"></div>
+                  </div>
+               
                 <div className="form-group">
                   <input
                     type="tel"
@@ -110,6 +177,7 @@ class Register extends Component {
                     pattern="[0]{1}[0-9]{9}"
                     placeholder="Điện thoại"
                     required
+                    onChange={this.handleChange}
                   />
                   <div className="invalid-feedback">
                     Không được để trống ô này.
@@ -123,6 +191,7 @@ class Register extends Component {
                     name="address"
                     placeholder="Địa chỉ"
                     required
+                    onChange={this.handleChange}
                   />
                   <div className="invalid-feedback">
                     Không được để trống ô này.
@@ -134,10 +203,11 @@ class Register extends Component {
                     <input
                       type="password"
                       className="form-control"
-                      name="passwordR"
+                      name="password"
                       id="pwdR"
                       placeholder="Mật khẩu"
                       required
+                      onChange={this.handleChange}
                     />
                     <button
                       type="button"
@@ -158,7 +228,9 @@ class Register extends Component {
 
                 <button
                   type="submit"
-                  className="btn btn-info btn-rounded"
+                  className="btn btn-outline-success"
+                  data-toggle="modal"
+                  data-target="#verifyCodeModal"
                   id="add"
                   name="Register"
                 >
@@ -168,6 +240,7 @@ class Register extends Component {
             </div>
           </div>
         </div>
+
       </div>
     );
   }

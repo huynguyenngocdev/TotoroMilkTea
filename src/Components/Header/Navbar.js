@@ -1,6 +1,11 @@
 import React from "react";
 import './Header.css'
+import DropdownUser from "./DropdownUser"
 class Navbar extends React.Component {
+
+
+
+
   render() {
     return (
       <nav className="navbar sticky-top navbar-expand-lg navbar-light scrolling-navbar navbar-transparent">
@@ -23,7 +28,7 @@ class Navbar extends React.Component {
             <ul className="navbar-nav mr-auto">
               <li className="nav-item">
                 <a className="nav-link" href='#products'>
-                  <i className="fas fa-coffee fw"/>Sản Phẩm
+                  <i className="fas fa-coffee fw" />Sản Phẩm
                 </a>
               </li>
               <li className="nav-item">
@@ -50,6 +55,7 @@ class Navbar extends React.Component {
                     placeholder="Nhập tên sản phẩm để tìm kiếm..."
                     aria-label="Search"
                   />
+                  <span className="space"> </span>
                   <button
                     type="button"
                     className="form-control btn btn-outline-primary"
@@ -59,23 +65,39 @@ class Navbar extends React.Component {
                 </form>
               </li>
             </ul>
+            <br />
             <ul className="navbar-nav">
-              <button
-                type="button"
-                className="btn"
-                data-toggle="modal"
-                data-target="#loginModal"
-              >
-                Đăng nhập
-              </button>
-              <button
-                type="button"
-                className="btn btn-outline-primary"
-                data-toggle="modal"
-                data-target="#registerModal"
-              >
-                Đăng ký
-              </button>
+              {!localStorage.getItem("currentAccount") ?
+                <div>
+                  <button
+                    type="button"
+                    className="btn btn-outline-success"
+                    data-toggle="modal"
+                    data-target="#loginModal"
+                  >
+                    Đăng nhập
+                 </button>
+                  <span className="space"> </span>
+                  <button
+                    type="button"
+                    className="btn btn-outline-primary"
+                    data-toggle="modal"
+                    data-target="#registerModal"
+                  >
+                    Đăng ký
+                  </button>
+                </div> :
+                <div className="AfterLogin">
+                  <div className="btn-group" style={{ display: "flex", alignItems: "center" }}>
+                    <DropdownUser />
+                   
+                  &emsp;
+                  {JSON.parse(localStorage.getItem('currentAccount')).name}
+                  
+                    {/* <button onClick={this.logOut} type="button" className="btn btn-outline-danger">
+                  Đăng Xuất</button> */}
+                  </div>
+                  </div>}
             </ul>
           </div>
         </div>

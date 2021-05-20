@@ -16,7 +16,6 @@ class UserManagement extends Component {
   }
 
   render() {
-    console.log(this.state.users)
     return (
       <div>
       

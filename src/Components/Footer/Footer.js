@@ -1,7 +1,7 @@
 import React from "react";
 import "./Footer.css";
 import Images from "Constants/images";
-import sendEmail from "../../SendEmail/SendEmail";
+import sendEmail from "../../Features/SendEmail";
 
 import $ from "jquery";
 class Footer extends React.Component {

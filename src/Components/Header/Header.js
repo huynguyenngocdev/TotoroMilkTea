@@ -20,7 +20,6 @@ class Header extends React.Component {
             />
           </div>
         </Link>
-
         <Navbar />
         <Carousel />
       </header>
