@@ -19,12 +19,10 @@ class AdsManagement extends Component {
         ads: res.data,
       }));
     });
-
-    await callAPI(`get_image/${this.state.ads.image}`, "GET", null).then(
-      (res) => {
-        this.setState(() => ({ imageAds: res.data.image }));
-      }
-    );
+    
+    await callAPI(`get_image/${this.state.ads.image}`, "GET", null).then((res) => {
+      this.setState(() => ({ imageAds: res.data.image }));
+    });
   }
 
   handleSubmit(event) {
@@ -33,7 +31,7 @@ class AdsManagement extends Component {
     if (this.state.imageAds !== undefined && this.state.imageAds !== null) {
       imageAds = this.state.imageAds;
     }
-
+    
     let data = {
       datetime: $("#datetimeAds").val(),
       image: imageAds,
@@ -43,6 +41,7 @@ class AdsManagement extends Component {
       status: Boolean($("#statusAds").val()),
       updateAt: this.state.ads.updateAt,
     };
+    
 
     callAPI("ads", "PUT", data).then((res) => {
       //console.log(res);
@@ -218,11 +217,7 @@ class AdsManagement extends Component {
         </div>
       );
     } else {
-      return (
-        <div className="text-center spinner-border text-primary" role="status">
-          <span className="sr-only">Loading...</span>
-        </div>
-      );
+      return <div></div>;
     }
   }
 }

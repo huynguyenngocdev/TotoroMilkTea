@@ -60,9 +60,11 @@
   }
   
   form.newsletter input[type="text"],
-  form.newsletter button {
+  form.newsletter input[type="submit"] {
+    float: left;
     height: 33px;
     padding: 5px;
+    width: 75%;
     font-size: 13px;
     border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -71,7 +73,12 @@
     color: #fff;
   }
   
-  form.newsletter button:hover {
+  form.newsletter input[type="submit"] {
+    float: right;
+    width: 23%;
+  }
+  
+  form.newsletter input[type="submit"]:hover {
     color: #f7544a;
   }
   

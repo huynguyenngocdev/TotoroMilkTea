@@ -6,6 +6,7 @@ import AdsManagement from "./Components/Admin/AdsManagement";
 import OrderManagement from "Components/Admin/OrderManagement";
 import ProductManagement from "Components/Admin/ProductManagement";
 import UserManagement from "Components/Admin/UserManagement";
+import AddUser from "Components/Admin/AddUser";
 
 const routes = [
   {
@@ -55,7 +56,18 @@ const amdinRoutes = [
     path: "/admin/users",
     exact: true,
     main: () => <UserManagement />,
+  },
+  {
+    path: "/admin/user/add",
+    exact: true,
+    main: () => <AddUser />,
+  },
+  {
+    path: "/admin/user/:id/edit",
+    exact: true,
+    main : ({match})=> <AddUser match ={match} />
   }
+
 ];
 
 export { routes, amdinRoutes };

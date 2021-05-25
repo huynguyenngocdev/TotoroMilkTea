@@ -1,65 +1,20 @@
 import React, { Component } from "react";
 import $ from "jquery";
-import callAPI from "../../API/callAPI";
-import { Redirect } from "react-router-dom";
-import showPassword from "../../Features/ShowPassword"
-// import axios from "axios";
 class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: "",
-      password: "",
-      redirect: null
-    };
-    this.checkLogin = this.checkLogin.bind(this);
-  }
-  
-    showPasswordNow = (id,idIcon) => {
-      showPassword(id,idIcon)
-    };
-    //console.log(document.getElementById("pwdL").getAttribute('type'));
-  
-
-  checkLogin = (event) => {
+  showPasswordL = (event) => {
     event.preventDefault();
-    let user = $('#userL').val();
-    let pw = $('#pwdL').val();
-    //http://totoromilkteaapi.herokuapp.com/api/users?username=admin&&password=admin
-    let endpoint = `users?username=${user}&&password=${pw}`;
-    console.log(endpoint);
-    var check = null;
-    callAPI(endpoint, "GET", null).then((res) => {
-      check = res.data;
-      if(check.length===0||user==="admin"){
-        $("#incorrect-user,.mess-incorrect-user").css("color", "red");
-        $("#incorrect-user,.mess-incorrect-user").html("Error: Tài khoản hoặc mật khẩu không chính xác!")
-      }else{
-        $("#incorrect-user,.mess-incorrect-user").css("color", "#20c997");
-        $("#incorrect-user,.mess-incorrect-user").html("Notice: Tài khoản và mật khẩu trùng khớp! ")
-        check.forEach(val=>{
-          localStorage.setItem('currentAccount',JSON.stringify(val));
-          window.location.reload()
-        })
-      }
-    }).catch(
-     err=>{
-      alert("Error: Something is wrong! Maybe the API is having problems");
-      console.log("Error: Something is wrong! Maybe the API is having problems");
-     },
-    );
-  };
-
-  getValue = (event) => {
-    let nam = event.target.name;
-    let val = event.target.value;
-    this.setState({ [nam]: val });
-  };
-
-  render() {
-    if (this.state.redirect) {
-      return <Redirect to={this.state.redirect} />
+    //console.log(document.getElementById("pwdL").getAttribute('type'));
+    if ($("#pwdL").attr("type") === "text") {
+      $("#pwdL").attr("type", "password");
+      $("#eye-icon-login").addClass("fa-eye-slash");
+      $("#eye-icon-login").removeClass("fa-eye");
+    } else if ($("#pwdL").attr("type") === "password") {
+      $("#pwdL").attr("type", "text");
+      $("#eye-icon-login").removeClass("fa-eye-slash");
+      $("#eye-icon-login").addClass("fa-eye");
     }
+  };
+  render() {
     return (
       <div
         className="modal fade"
@@ -85,16 +40,14 @@ class Login extends Component {
               </button>
             </div>
             <div className="modal-body">
-              <form className="was-validated" onSubmit={this.checkLogin}>
+              <form className="was-validated">
                 <div className="form-group">
                   <input
                     type="text"
                     className="form-control"
                     name="username"
-                    id='userL'
                     placeholder="Tên đăng nhập"
                     required
-                    onChange={this.getValue}
                   />
                   <div className="invalid-feedback">
                     Không được để trống ô này.
@@ -110,12 +63,11 @@ class Login extends Component {
                       id="pwdL"
                       placeholder="Mật khẩu"
                       required
-                      onChange={this.getValue}
                     />
                     <button
                       type="button"
                       className="btn btn-outline-dark input-group-addon"
-                      onClick={()=>this.showPasswordNow("pwdL","eye-icon-login")}
+                      onClick={this.showPasswordL}
                     >
                       <i
                         className="fa fa-eye-slash"
@@ -127,9 +79,8 @@ class Login extends Component {
                       Không được để trống ô này.
                     </div>
                   </div>
-                  <div id="incorrect-user"></div>
                 </div>
-                
+
                 <button
                   type="submit"
                   className="btn btn-info btn-rounded"

@@ -1,17 +1,21 @@
 import axios from "axios";
 import API_URL from "../Constants/API_URL";
 
-//get token
-async function callAPI(endpoint, method = "GET", body) {
-  let token;
-  await axios
+const getToken = () => {
+  const token = axios
     .post(`${API_URL}/auth`, {
       username: "admin",
       password: "admin",
     })
     .then((res) => {
-      token = res.data.access_token;
+      return res.data.access_token;
     });
+  return token;
+};
+
+//get token
+async function callAPI(endpoint, method = "GET", body){
+  const token = await getToken();
   return axios({
     method: method,
     url: `${API_URL}/${endpoint}`,
@@ -20,6 +24,6 @@ async function callAPI(endpoint, method = "GET", body) {
   }).catch((err) => {
     console.log(err);
   });
-}
+};
 
 export default callAPI;

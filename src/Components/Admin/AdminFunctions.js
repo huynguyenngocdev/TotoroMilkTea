@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import "./Admin.css";
-import { NavLink, Route, Switch } from "react-router-dom";
+import { NavLink,Route, Switch } from "react-router-dom";
 import { amdinRoutes } from "../../routes";
 
 class AdminFunctions extends Component {
+
   componentDidMount() {
     let path = window.location.pathname;
     let url = window.location.href;
@@ -12,7 +13,7 @@ class AdminFunctions extends Component {
       path !== "/admin/ads" &&
       path !== "/admin/orders" &&
       path !== "/admin/products" &&
-      path !== "/admin/users"
+      path !==   "/admin/users"
     ) {
       window.location.assign(url.slice(0, url.indexOf("admin")) + "error");
     }
@@ -104,7 +105,6 @@ class AdminFunctions extends Component {
             </NavLink>
           </div>
         </div>
-
         <div>
           <div className="title-page-admin text-center">TRANG ADMIN</div>
           <div>

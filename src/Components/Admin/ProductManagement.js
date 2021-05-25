@@ -5,113 +5,47 @@ class ProductManagement extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      products: [],
-      imageProducts: [],
-      categories: [],
-      percentDiscount: 0,
-      imageProductsTemp: "",
-      purposeModal: "add",
+      ads: null,
     };
-    this.addNewProduct = this.addNewProduct.bind(this);
-    this.previewNewProductImage = this.previewNewProductImage.bind(this);
-    this.deleteProduct = this.deleteProduct.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleFileImageAdsInput = this.handleFileImageAdsInput.bind(this);
   }
 
-  async componentDidMount() {
-    // get all products
-    await callAPI("products", "GET", null).then((res) => {
-      this.setState(() => ({
-        products: res.data,
-      }));
-    });
-    // get all categories
-    await callAPI("categories", "GET", null).then((res) => {
-      this.setState(() => ({
-        categories: res.data,
-      }));
-    });
-    // get percent discount
-    await callAPI("ads", "GET", null).then((res) => {
-      this.setState(() => ({
-        percentDiscount: res.data.discount,
-      }));
-    });
-    this.getImageProducts();
+  componentDidMount() {
+    // callAPI("ads", "GET", null).then((res) => {
+    //   this.setState({
+    //     ads: res.data,
+    //   });
+    // });
   }
 
-  async getImageProducts() {
-    let listImage = [];
-    let listFileImage = [];
-    //get image products
-    this.state.products.forEach((product) => {
-      listImage.push(product.image);
-    });
-
-    for (let i = 0; i < listImage.length; i++) {
-      let temp = await callAPI(`get_image/${listImage[i]}`, "GET", null).then(
-        (res) => {
-          return res.data.image;
-        }
-      );
-      listFileImage.push(temp);
-    }
-    this.setState({ imageProducts: listFileImage });
+  handleSubmit(event) {
+    event.preventDefault();
+    this.updateAds();
   }
 
-  async addNewProduct(e) {
-    e.preventDefault();
-    let newProduct = {
-      name: $("#productName").val(),
-      price: parseInt($("#productPrice").val()),
-      categoryId: parseInt($("#productCategoryId").val()),
-      image: this.state.imageProductsTemp,
-      amountSold: 3000,
-    };
+  updateAds = () => {
+    // let data = {
+    //   datetime: $("#datetimeAds").val(),
+    //   image: $("#imageAds").val(),
+    //   textStandstill: $("#textStandstillAds").val(),
+    //   textRun: $("#textRunAds").val(),
+    //   discount: $("#discountAds").val(),
+    //   status: $("#statusAds").val(),
+    // };
+  };
 
-    await callAPI("products", "POST", newProduct)
-      .then((res) => {
-        alert("Thêm sản phẩm thành công!");
-      })
-      .catch((err) => alert("Thêm sản phẩm không thành công."));
-
-    $("#btnCloseProductModal").click();
-
-    this.componentDidMount();
-  }
-
-  async deleteProduct(index) {
-    await callAPI(
-      `delete_image/${this.state.products[index].image}`,
-      "POST",
-      null
-    );
-
-    await callAPI(
-      `products/${this.state.products[index].id}`,
-      "DELETE",
-      null
-    ).then((res) => {
-      if (res.status === 200) {
-        alert("Xóa sản phẩm thành công!");
-      } else {
-        alert("Xóa sản phẩm không thành công.");
-      }
-    });
-
-    this.componentDidMount();
-  }
-
-  previewNewProductImage = () => {
-    const preview = document.getElementById("imageProduct");
-    const file = document.getElementById("imageProductInput").files[0];
+  // preview image before upload
+  handleFileImageAdsInput = () => {
+    const preview = document.getElementById("newImageAds");
+    const file = document.getElementById("imageAdsInput").files[0];
     const reader = new FileReader();
 
     reader.addEventListener(
       "load",
-      () => {
+      function () {
         // convert image file to base64 string
         preview.src = reader.result;
-        this.setState({ imageProductsTemp: reader.result });
       },
       false
     );
@@ -121,218 +55,203 @@ class ProductManagement extends Component {
     }
   };
 
-  openModalUpdate(index) {
-    $("#productName").val(this.state.products[index].name);
-
-    $("#imageProduct").attr("src", this.state.imageProducts[index]);
-
-    $("#productPrice").val(this.state.products[index].price);
-    $("#productCategoryId").val(this.state.products[index].categoryId);
-  }
-
   render() {
-    return (
-      <div>
-        <button
-          type="button"
-          onClick={()=>{this.setState(()=>({purposeModal: 'add'}))}}
-          className="btn btn-primary"
-          data-toggle="modal"
-          data-target="#productModal"
-        >
-          <i className="fas fa-plus fw" aria-hidden="true"></i> Thêm sản phẩm
-        </button>
+    if (this.state.ads != null) {
+      return (
+        <div>
+          <button
+            type="button"
+            className="btn btn-primary"
+            data-toggle="modal"
+            data-target="#updateAds"
+          >
+            <i className="fa fa-sync-alt fw" aria-hidden="true"></i> Cập nhật
+          </button>
+          <div
+            className="modal fade"
+            id="updateAds"
+            tabIndex={-1}
+            role="dialog"
+            aria-labelledby="modelTitleId"
+            aria-hidden="true"
+          >
+            <div className="modal-dialog" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">Cập nhật quảng cáo</h5>
+                  <button
+                    type="button"
+                    className="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">Đóng</span>
+                  </button>
+                </div>
 
-        <div
-          className="modal fade"
-          id="productModal"
-          tabIndex={-1}
-          role="dialog"
-          aria-labelledby="modelTitleId"
-          aria-hidden="true"
-        >
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Thêm/Cập nhật sản phẩm</h5>
-                <button
-                  type="button"
-                  className="close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                  id="btnCloseProductModal"
-                >
-                  <span aria-hidden="true">Đóng</span>
-                </button>
-              </div>
-
-              <div className="modal-body">
-                <form
-                  className="was-validated"
-                  onSubmit={this.addNewProduct}
-                  encType="multipart/form-data"
-                >
-                  {/* product name */}
-                  <div className="form-group">
-                    <label htmlFor="productName" className="col-form-label">
-                      Tên sản phẩm
-                    </label>
-
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="productName"
-                      placeholder="Nhập tên sản phẩm..."
-                      required
-                    />
-
-                    <div className="invalid-feedback">
-                      Không được để trống ô này.
-                    </div>
-                  </div>
-                  {/* product image */}
-                  <div className="form-group">
-                    <label
-                      htmlFor="imageProductInput"
-                      className="col-form-label"
-                    >
-                      Ảnh sản phẩm
-                    </label>
-
-                    <div className="input-group">
+                <div className="modal-body">
+                  <form className="was-validated" onSubmit={this.handleSubmit}>
+                    <div className="form-group">
+                      <label htmlFor="datetimeAds">Hạn khuyến mãi:</label>
                       <input
-                        type="file"
-                        id="imageProductInput"
-                        onChange={this.previewNewProductImage}
+                        type="datetime-local"
+                        className="form-control"
+                        id="datetimeAds"
+                        min={new Date()
+                          .toISOString()
+                          .substring(
+                            0,
+                            ((new Date().toISOString().indexOf("T") | 0) + 6) |
+                              0
+                          )}
+                        max="2030-12-31T00:00"
+                        defaultValue={new Date()
+                          .toISOString()
+                          .substring(
+                            0,
+                            ((new Date().toISOString().indexOf("T") | 0) + 6) |
+                              0
+                          )}
+                        required
                       />
-                      <img
-                        src=""
-                        alt="image_product"
-                        id="imageProduct"
-                        width={"100px"}
-                      />
+                      <div className="invalid-feedback">
+                        Không được để trống ô này.
+                      </div>
                     </div>
-                  </div>
-                  {/* product price */}
-                  <div className="form-group">
-                    <label htmlFor="productPrice" className="col-form-label">
-                      Giá gốc
-                    </label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="productPrice"
-                      placeholder="Nhập giá sản phẩm..."
-                      min={0}
-                      required
-                    />
-                    <div className="invalid-feedback">
-                      Không được để trống ô này.
-                    </div>
-                  </div>
-                  {/* product category */}
-                  <div className="form-group">
-                    <label htmlFor="productCategoryId">Danh mục sản phẩm</label>
-                    <select className="form-control" id="productCategoryId">
-                      {this.state.categories.map((category, index) => (
-                        <option key={index} value={category.id}>
-                          {category.id}. {category.categoryName}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
 
-                  {this.state.purposeModal === "add" ? (
+                    <div className="form-group">
+                      <label htmlFor="imageAds">Ảnh quảng cáo:</label>
+                      <img
+                        src={this.state.ads.image}
+                        alt="Ảnh cũ"
+                        id="oldImageAds" width={'100px'}
+                      />
+                      <br />
+                      Hoặc :
+                      <div className="input-group">
+                        <input
+                          type="file"
+                          className="form-control"
+                          id="imageAdsInput"
+                          onChange={this.handleFileImageAdsInput}
+                        />
+                      </div>
+                      <img src alt="Ảnh mới" id="newImageAds" width={'100px'}/>
+                    </div>
+
+                    <div className="form-group">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="textStandstillAds"
+                        defaultValue={
+                          this.state.ads != null
+                            ? this.state.ads.textStandstill
+                            : ""
+                        }
+                        required
+                      />
+                      <div className="invalid-feedback">
+                        Không được để trống ô này.
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="textRunAds"
+                        defaultValue={
+                          this.state.ads != null ? this.state.ads.textRun : ""
+                        }
+                        required
+                      />
+                      <div className="invalid-feedback">
+                        Không được để trống ô này.
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <input
+                        type="number"
+                        className="form-control"
+                        id="discountAds"
+                        defaultValue={
+                          this.state.ads != null
+                            ? this.state.ads.discount
+                            : null
+                        }
+                        max={50}
+                        min={0}
+                        required
+                      />
+                      <div className="invalid-feedback">
+                        Không được để trống ô này.
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label htmlFor="statusAds">Trạng thái quảng cáo:</label>
+                      <select
+                        className="form-control"
+                        id="statusAds"
+                        defaultValue={
+                          this.state.ads != null ? this.state.ads.status : null
+                        }
+                      >
+                        <option value={true}>Đang bật</option>
+                        <option value={false}>Đang tắt</option>
+                      </select>
+                    </div>
+
                     <button
                       type="submit"
                       className="btn btn-danger btn-rounded"
                     >
-                      <i className="fa fa-plus fw" aria-hidden="true"></i> Thêm mới
+                      <i className="fa fa-sync-alt fw" aria-hidden="true"></i>
+                      Cập nhật
                     </button>
-                  ) : (
-                    <button
-                      type="submit"
-                      className="btn btn-danger btn-rounded"
-                    >
-                      <i className="fas fa-sync-alt fw" aria-hidden="true"></i> Cập nhật
-                    </button>
-                  )}
-                </form>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* show list products */}
-        <table className="table text-center">
-          <thead>
-            <tr>
-              <th>ID sản phẩm</th>
-              <th>Tên sản phẩm</th>
-              <th>Hình ảnh</th>
-              <th>Giá gốc</th>
-              <th>Giá khuyến mãi({this.state.percentDiscount}%)</th>
-              <th>Danh mục sản phẩm</th>
-              <th>Đã bán (ly)</th>
-              <th>Hành động</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.products.map((product, index) => (
-              <tr key={index}>
-                <td>{product.id}</td>
-                <td>{product.name}</td>
-                <td>
-                  <img
-                    src={this.state.imageProducts[index]}
-                    width="50px"
-                    alt="image_product"
-                  />
-                </td>
-                <td>
-                  {product.price.toLocaleString("vi", {
-                    style: "currency",
-                    currency: "VND",
-                  })}
-                </td>
-                <td>
-                  {(
-                    product.price -
-                    (product.price * this.state.percentDiscount) / 100
-                  ).toLocaleString("vi", {
-                    style: "currency",
-                    currency: "VND",
-                  })}
-                </td>
-                <td>
-                  {this.state.categories[product.categoryId - 1]
-                    ? this.state.categories[product.categoryId - 1].categoryName
-                    : ""}
-                </td>
-                <td>{product.amountSold}</td>
-                <td>
-                  <button
-                    className="btn btn-sm btn-primary mr-2"
-                    data-toggle="modal"
-                    data-target="#productModal"
-                    onClick={() => this.openModalUpdate(index)}
-                    onClickCapture={()=>{this.setState(()=>({purposeModal: 'update'}))}}
-                  >
-                    <i className="fas fa-edit fw" />
-                  </button>
-                  <button
-                    className="btn btn-sm btn-danger"
-                    onClick={() => this.deleteProduct(index)}
-                  >
-                    <i className="far fa-trash-alt fw" />
-                  </button>
-                </td>
+          <table className="table text-center">
+            <thead>
+              <tr>
+                <th>Thời gian kết thúc khuyến mãi</th>
+                <th>Ảnh quảng cáo</th>
+                <th>Chữ ở banner(đứng yên)</th>
+                <th>Chữ chạy liên tục</th>
+                <th>Giảm giá(%)</th>
+                <th>Trạng thái quảng cáo</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    );
+            </thead>
+            <tbody>
+              {this.state.ads != null ? (
+                <tr>
+                  <td>{this.state.ads.datetime}</td>
+                  <td>
+                    <img src={this.state.ads.image} width={"50px"} />
+                  </td>
+                  <td>{this.state.ads.textStandstill}</td>
+                  <td>{this.state.ads.textRun}</td>
+                  <td>{this.state.ads.discount}</td>
+                  <td>
+                    {this.state.ads.status == true ? "Đang bật" : "Đang tắt"}
+                  </td>
+                </tr>
+              ) : (
+                <tr></tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      );
+    } else {
+      return <div></div>;
+    }
   }
 }
 
