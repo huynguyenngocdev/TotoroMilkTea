@@ -41,7 +41,7 @@ class OrderManagement extends Component {
       }
 
       console.table(index, id, data.status);
-      
+
       //put to JSON server
       await callAPI(`orders/${id}`, "PUT", data)
         .then(() => {
@@ -54,6 +54,7 @@ class OrderManagement extends Component {
       this.componentDidMount(); //render again
     }
   }
+  
   async cancelOrder(id, index) {
     if (window.confirm(`Hủy đơn có mã là ${id} ?`)) {
       let data = this.state.orders[index];
