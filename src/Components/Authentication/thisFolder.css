@@ -1,0 +1,6 @@
+.forgotPassword {
+    color: blueviolet;
+}
+.forgotPassword:hover{
+    color: rgb(255, 0, 200);
+}
