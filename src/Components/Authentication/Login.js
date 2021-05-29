@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import $ from "jquery";
 import callAPI from "../../API/callAPI";
 import showPassword from "../../Features/ShowPassword";
+import "./thisFolder.css";
 // import axios from "axios";
 class Login extends Component {
   constructor(props) {
@@ -143,8 +144,13 @@ class Login extends Component {
                     </div>
                   </div>
                   <div id="incorrect-user"></div>
+                  <div className="forgotPassword">
+                        <a 
+                    data-toggle="modal"
+                    data-target="#forgotPwModal">Quên Mật Khẩu?</a>
+                      </div>
                 </div>
-
+                      
                 <button
                   type="submit"
                   className="btn btn-info btn-rounded"
