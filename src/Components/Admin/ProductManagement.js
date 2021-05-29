@@ -11,10 +11,12 @@ class ProductManagement extends Component {
       percentDiscount: 0,
       imageProductsTemp: "",
       purposeModal: "add",
+      productIsUpdating: -1,
     };
     this.addNewProduct = this.addNewProduct.bind(this);
     this.previewNewProductImage = this.previewNewProductImage.bind(this);
     this.deleteProduct = this.deleteProduct.bind(this);
+    this.updateProduct = this.updateProduct.bind(this);
   }
 
   async componentDidMount() {
@@ -80,25 +82,28 @@ class ProductManagement extends Component {
   }
 
   async deleteProduct(index) {
-    await callAPI(
-      `delete_image/${this.state.products[index].image}`,
-      "POST",
-      null
-    );
+    let check = window.confirm("Bạn có chắc là muốn xóa sản phẩm này không");
+    if (check) {
+      await callAPI(
+        `delete_image/${this.state.products[index].image}`,
+        "POST",
+        null
+      );
 
-    await callAPI(
-      `products/${this.state.products[index].id}`,
-      "DELETE",
-      null
-    ).then((res) => {
-      if (res.status === 200) {
-        alert("Xóa sản phẩm thành công!");
-      } else {
-        alert("Xóa sản phẩm không thành công.");
-      }
-    });
+      await callAPI(
+        `products/${this.state.products[index].id}`,
+        "DELETE",
+        null
+      ).then((res) => {
+        if (res.status === 200) {
+          alert("Xóa sản phẩm thành công!");
+        } else {
+          alert("Xóa sản phẩm không thành công.");
+        }
+      });
 
-    this.componentDidMount();
+      this.componentDidMount();
+    }
   }
 
   previewNewProductImage = () => {
@@ -111,7 +116,7 @@ class ProductManagement extends Component {
       () => {
         // convert image file to base64 string
         preview.src = reader.result;
-        this.setState({ imageProductsTemp: reader.result });
+        this.setState(() => ({ imageProductsTemp: reader.result }));
       },
       false
     );
@@ -122,20 +127,61 @@ class ProductManagement extends Component {
   };
 
   openModalUpdate(index) {
+    $("#productId").val(this.state.products[index].id);
+
     $("#productName").val(this.state.products[index].name);
 
     $("#imageProduct").attr("src", this.state.imageProducts[index]);
 
     $("#productPrice").val(this.state.products[index].price);
     $("#productCategoryId").val(this.state.products[index].categoryId);
+    this.setState({ productIsUpdating: this.state.products[index].id });
+  }
+
+  async updateProduct(e) {
+    e.preventDefault();
+    //let imageUpdate = $("#imageProduct").attr("src");
+   // console.log(this.state.productIsUpdating);
+    let updatingProduct = {
+      id: this.state.productIsUpdating,
+      name: $("#productName").val(),
+      price: parseInt($("#productPrice").val()),
+      categoryId: parseInt($("#productCategoryId").val()),
+      image: $("#imageProduct").attr("src"),
+      updateAt: this.state.products[this.state.productIsUpdating - 1].updateAt,
+      amountSold: this.state.products[this.state.productIsUpdating - 1].amountSold,
+    };
+
+    //console.log(updatingProduct);
+
+    await callAPI(`products/${this.state.productIsUpdating}`, "PUT", updatingProduct)
+      .then(() => {
+        alert("Cập nhật sản phẩm thành công!");
+      })
+      .catch((err) => alert("Cập nhật sản phẩm không thành công."));
+
+    $("#btnCloseProductModal").click();
+
+    this.componentDidMount();
   }
 
   render() {
+    //console.log(this.state.productIsUpdating);
     return (
       <div>
         <button
           type="button"
-          onClick={()=>{this.setState(()=>({purposeModal: 'add'}))}}
+          onClick={() => {
+            $("#productId").val("");
+
+            $("#productName").val("");
+
+            $("#imageProduct").attr("src", "");
+
+            $("#productPrice").val("");
+
+            this.setState(() => ({ purposeModal: "add" }));
+          }}
           className="btn btn-primary"
           data-toggle="modal"
           data-target="#productModal"
@@ -167,11 +213,24 @@ class ProductManagement extends Component {
               </div>
 
               <div className="modal-body">
-                <form
-                  className="was-validated"
-                  onSubmit={this.addNewProduct}
-                  encType="multipart/form-data"
-                >
+                <form className="was-validated" encType="multipart/form-data">
+                  {/* id product (only show when update) */}
+                  {this.state.purposeModal === "update" ? (
+                    <div className="form-group">
+                      <label htmlFor="productId" className="col-form-label">
+                        ID của sản phẩm
+                      </label>
+
+                      <input
+                        type="text"
+                        className="form-control-plaintext"
+                        id="productId"
+                        readOnly
+                      />
+                    </div>
+                  ) : (
+                    ""
+                  )}
                   {/* product name */}
                   <div className="form-group">
                     <label htmlFor="productName" className="col-form-label">
@@ -241,20 +300,24 @@ class ProductManagement extends Component {
                       ))}
                     </select>
                   </div>
-
+                  {/* button */}
                   {this.state.purposeModal === "add" ? (
                     <button
-                      type="submit"
+                      type="button"
+                      onClick={this.addNewProduct}
                       className="btn btn-danger btn-rounded"
                     >
-                      <i className="fa fa-plus fw" aria-hidden="true"></i> Thêm mới
+                      <i className="fa fa-plus fw" aria-hidden="true"></i> Thêm
+                      mới
                     </button>
                   ) : (
                     <button
-                      type="submit"
+                      type="button"
+                      onClick={this.updateProduct}
                       className="btn btn-danger btn-rounded"
                     >
-                      <i className="fas fa-sync-alt fw" aria-hidden="true"></i> Cập nhật
+                      <i className="fas fa-sync-alt fw" aria-hidden="true"></i>{" "}
+                      Cập nhật
                     </button>
                   )}
                 </form>
@@ -316,7 +379,9 @@ class ProductManagement extends Component {
                     data-toggle="modal"
                     data-target="#productModal"
                     onClick={() => this.openModalUpdate(index)}
-                    onClickCapture={()=>{this.setState(()=>({purposeModal: 'update'}))}}
+                    onClickCapture={() => {
+                      this.setState(() => ({ purposeModal: "update" }));
+                    }}
                   >
                     <i className="fas fa-edit fw" />
                   </button>
