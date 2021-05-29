@@ -102,6 +102,22 @@ class AdminFunctions extends Component {
             >
               Người dùng
             </NavLink>
+
+            <NavLink
+              className="nav-link"
+              id="v-pills-logout-tab"
+              data-toggle="pill"
+              role="tab"
+              aria-controls="v-pills-logout"
+              aria-selected="false"
+              to={`/home`}
+              onClick={() => {
+                sessionStorage.removeItem("admin");
+              }}
+              style={{ color: "#b8c7ce" }}
+            >
+              Đăng xuất
+            </NavLink>
           </div>
         </div>
 

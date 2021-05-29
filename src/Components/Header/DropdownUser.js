@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 class DropdownUser extends Component {
     logOut = () => {
         localStorage.removeItem("currentAccount")
+        sessionStorage.removeItem('admin')
         window.location.reload();
     }
     render() {

@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import $ from "jquery";
 import callAPI from "../../API/callAPI";
-import { Redirect } from "react-router-dom";
-import showPassword from "../../Features/ShowPassword"
+import showPassword from "../../Features/ShowPassword";
 // import axios from "axios";
 class Login extends Component {
   constructor(props) {
@@ -10,44 +9,57 @@ class Login extends Component {
     this.state = {
       username: "",
       password: "",
-      redirect: null
+      redirect: null,
     };
     this.checkLogin = this.checkLogin.bind(this);
   }
-  
-    showPasswordNow = (id,idIcon) => {
-      showPassword(id,idIcon)
-    };
-    //console.log(document.getElementById("pwdL").getAttribute('type'));
-  
+
+  showPasswordNow = (id, idIcon) => {
+    showPassword(id, idIcon);
+  };
+  //console.log(document.getElementById("pwdL").getAttribute('type'));
 
   checkLogin = (event) => {
     event.preventDefault();
-    let user = $('#userL').val();
-    let pw = $('#pwdL').val();
+    let user = $("#userL").val();
+    let pw = $("#pwdL").val();
     //http://totoromilkteaapi.herokuapp.com/api/users?username=admin&&password=admin
     let endpoint = `users?username=${user}&&password=${pw}`;
-    console.log(endpoint);
     var check = null;
-    callAPI(endpoint, "GET", null).then((res) => {
-      check = res.data;
-      if(check.length===0||user==="admin"){
-        $("#incorrect-user,.mess-incorrect-user").css("color", "red");
-        $("#incorrect-user,.mess-incorrect-user").html("Error: Tài khoản hoặc mật khẩu không chính xác!")
-      }else{
-        $("#incorrect-user,.mess-incorrect-user").css("color", "#20c997");
-        $("#incorrect-user,.mess-incorrect-user").html("Notice: Tài khoản và mật khẩu trùng khớp! ")
-        check.forEach(val=>{
-          localStorage.setItem('currentAccount',JSON.stringify(val));
-          window.location.reload()
+    if (user === "admin" && pw === "admin") {
+      sessionStorage.setItem(
+        "admin",
+        "0356ef04b426649da842b8120640953e3be097a551111355d2b6739e4e8042b2"
+      );
+      this.setState({ redirect: "/admin" });
+    } else {
+      callAPI(endpoint, "GET", null)
+        .then((res) => {
+          check = res.data;
+          if (check.length === 0) {
+            $("#incorrect-user,.mess-incorrect-user").css("color", "red");
+            $("#incorrect-user,.mess-incorrect-user").html(
+              "Error: Tài khoản hoặc mật khẩu không chính xác!"
+            );
+          } else {
+            $("#incorrect-user,.mess-incorrect-user").css("color", "#20c997");
+            $("#incorrect-user,.mess-incorrect-user").html(
+              "Notice: Tài khoản và mật khẩu trùng khớp! "
+            );
+            check.forEach((val) => {
+              localStorage.setItem("currentAccount", JSON.stringify(val));
+              window.location.reload();
+            });
+          }
         })
-      }
-    }).catch(
-     err=>{
-      alert("Error: Something is wrong! Maybe the API is having problems");
-      console.log("Error: Something is wrong! Maybe the API is having problems");
-     },
-    );
+        .catch((err) => {
+          alert("Error: Something is wrong! Maybe the API is having problems");
+          console.log(
+            "Error: Something is wrong! Maybe the API is having problems"
+          );
+        });
+      this.setState({ redirect: null });
+    }
   };
 
   getValue = (event) => {
@@ -58,7 +70,8 @@ class Login extends Component {
 
   render() {
     if (this.state.redirect) {
-      return <Redirect to={this.state.redirect} />
+      console.log(this.state.redirect);
+      return window.location.assign('./admin')
     }
     return (
       <div
@@ -91,7 +104,7 @@ class Login extends Component {
                     type="text"
                     className="form-control"
                     name="username"
-                    id='userL'
+                    id="userL"
                     placeholder="Tên đăng nhập"
                     required
                     onChange={this.getValue}
@@ -115,7 +128,9 @@ class Login extends Component {
                     <button
                       type="button"
                       className="btn btn-outline-dark input-group-addon"
-                      onClick={()=>this.showPasswordNow("pwdL","eye-icon-login")}
+                      onClick={() =>
+                        this.showPasswordNow("pwdL", "eye-icon-login")
+                      }
                     >
                       <i
                         className="fa fa-eye-slash"
@@ -129,7 +144,7 @@ class Login extends Component {
                   </div>
                   <div id="incorrect-user"></div>
                 </div>
-                
+
                 <button
                   type="submit"
                   className="btn btn-info btn-rounded"
