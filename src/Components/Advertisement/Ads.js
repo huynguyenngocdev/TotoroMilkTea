@@ -27,12 +27,17 @@ class Ads extends Component {
         }));
       }
     });
-
-    callAPI(`get_image/${this.state.adsInfor.image}`, "GET", null).then(
-      (res) => {
-        this.setState(() => ({ imageAds: res.data.image }));
-      }
-    );
+    try {
+      callAPI(`get_image/${this.state.adsInfor.image}`, "GET", null).then(
+        (res) => {
+          this.setState(() => ({ imageAds: res.data.image }));
+        }
+      );
+    } catch {
+      alert(
+        "Không thể hiển thị quảng cáo vui lòng tắt chặn quảng cáo trên trình duyêt để website được hoạt động tốt nhất."
+      );
+    }
 
     this.timerID = setInterval(() => this.tick(), 1000);
   }
