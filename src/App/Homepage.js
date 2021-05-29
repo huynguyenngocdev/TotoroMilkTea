@@ -6,6 +6,8 @@ import Register from "../Components/Authentication/Register";
 import Login from "../Components/Authentication/Login";
 import Ads from "../Components/Advertisement/Ads";
 
+import Content from '../Components/Content/Content'
+
 import Footer from "../Components/Footer/Footer";
 
 const Homepage = () => {
@@ -16,6 +18,7 @@ const Homepage = () => {
       <Ads />
       <Register />
       <Login />
+      <Content/>
       <Footer />
     </div>
   );

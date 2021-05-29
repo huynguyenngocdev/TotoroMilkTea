@@ -1,6 +1,7 @@
 import Admin from "./App/Adminpage";
 import Home from "./App/Homepage";
 import NotFound from "Components/NotFound/index";
+import Cart from "./Components/Content/Products/Cart"
 
 import AdsManagement from "./Components/Admin/AdsManagement";
 import OrderManagement from "Components/Admin/OrderManagement";
@@ -17,6 +18,11 @@ const routes = [
     path: "/home",
     exact: true,
     main: () => <Home />,
+  },
+  {
+    path: "/cart",
+    exact: true,
+    main: () => <Cart />,
   },
   {
     path: "/admin",
@@ -57,5 +63,6 @@ const amdinRoutes = [
     main: () => <UserManagement />,
   }
 ];
+
 
 export { routes, amdinRoutes };

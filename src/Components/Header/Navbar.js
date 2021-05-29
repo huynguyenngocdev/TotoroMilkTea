@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 import './Header.css'
 class Navbar extends React.Component {
   render() {
@@ -22,13 +23,13 @@ class Navbar extends React.Component {
           <div className="navbar-collapse collapse" id="navbar">
             <ul className="navbar-nav mr-auto">
               <li className="nav-item">
-                <a className="nav-link" href='#products'>
-                  <i className="fas fa-coffee fw"/>Sản Phẩm
+                <a className="nav-link" >
+                  <Link className="fas fa-coffee fw" to="/products"></Link>Sản Phẩm
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#a">
-                  <i className="fas fa-shopping-cart fw" aria-hidden="true"></i>
+                <a className="nav-link">
+                  <Link className="fas fa-shopping-cart fw" aria-hidden="true" to="/cart"><div className="count-cart">{this.props.countCartItem}</div></Link>
                   Giỏ Hàng
                 </a>
               </li>

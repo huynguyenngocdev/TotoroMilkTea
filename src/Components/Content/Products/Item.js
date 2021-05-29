@@ -1,46 +1,38 @@
 import React from "react";
-import "./Item.css";
-import Detail from "./Detail";
+// import {actFetchProductsRequest,AddCart} from '../action'
+// import {connect} from 'react-redux';
 
-const Details = (detail) => {
-  <Detail Photos={detail} />;
-};
+import "./Item.css";
+import addCart from "../Products/Cart"
+
+
 
 const Item = (props) => {
+
+  
   return (
-    <div className="col-md-3">
-      <div>
-        <div className="card-img-top zoom">
-          <img
-            className="img-fluid w-100"
-            src={props.Photos.photo}
-            alt="product"
-          />
+    <div className="col-lg-4 col-md-6 col-6 mt-3 pb-3">
+      <div className="card product p-2" style={{ width: "auto" }}>
+        <img
+          htmlFor="imageAds"
+          className="card-img-top"
+          src={props.product.image}
+        />
+        <div className="card-title product-title text-center h5">
+          {props.product.name}
         </div>
-        <div className="card-body">
-          <div className="card-title font-weight-bold indigo-text"></div>
-          <b>{props.Photos.title}</b>
-          <div>
-            <button
-              className="float-left btn btn-rounded btn-info waves-effect"
-              onClick={Details(props.Photos)}
-              data-toggle="modal"
-              data-target="#detail"
-            >
-              <i className="fa fa-info" aria-hidden="true" />
-            </button>
-              <button
-                type="submit"
-                className="float-right btn btn-warning waves-effect"
-              >
-                <i className="fas fa-cart-plus" />
-                <b>Thêm vào giỏ</b>
-              </button>
-          </div>
+        <div className="text-center h6">{props.product.price}VNĐ</div>
+        <div className="star_box float-left pt-2">
+          <button onClick={addCart} className="btn btn-sm btn-outline-primary float-right col-12" >
+            <i className="fas fa-cart-plus" /> Thêm vào giỏ hàng
+          </button>
         </div>
       </div>
     </div>
   );
 };
+
+
+
 
 export default Item;
