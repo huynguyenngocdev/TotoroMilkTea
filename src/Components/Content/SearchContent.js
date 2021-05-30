@@ -87,7 +87,7 @@ class SearchContent extends Component {
       return (
         <div id="products">
           <h2 className="text-center">
-            Rất tiếc, chúng tôi không tìm thấy kết quả nào phù hợp với từ khóa
+            Rất tiếc, chúng tôi không tìm thấy kết quả nào phù hợp với từ khóa &nbsp;
             {this.state.searchValue}
           </h2>
           <div className="text-center">
