@@ -1,4 +1,5 @@
 import callAPI from "API/callAPI";
+import SendEmail from "Features/SendEmail";
 
 import React, { Component } from "react";
 import UserItem from "./UserItem";
@@ -9,7 +10,7 @@ class UserManagement extends Component {
     this.state = {
       users: [],
     };
-    this.onBlock = this.onBlock.bind(this)
+    this.onBlock = this.onBlock.bind(this);
   }
 
   async componentDidMount() {
@@ -26,14 +27,26 @@ class UserManagement extends Component {
     } else {
       user.status = true;
     }
-    console.log(user.status,"|",user.id);
 
     //console.table(index, user.status);
     await callAPI(`users/${user.id}`, "PUT", user);
     await callAPI("users", "GET", null).then((res) => {
       this.setState({ users: res.data });
     });
-    window.location.reload()
+
+    let message = user.status
+      ? "Tài khoản của bạn đã bị khóa! Vui lòng gọi điện cho admin qua sđt 0355621838 để mở khóa tài khoản."
+      : "Tài khoản của bạn đã được mở khóa! Bây giờ bạn có thể đăng nhập vào hệ thống.";
+
+    await SendEmail(user.email, message)
+      .then(() => {
+        alert("Đã thông báo cho khách hàng!");
+      })
+      .catch(() => {
+        alert("Thông báo cho khách hàng thất bại!");
+      });
+
+    window.location.reload();
   };
 
   render() {

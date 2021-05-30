@@ -41,6 +41,10 @@ class Login extends Component {
             $("#incorrect-user,.mess-incorrect-user").html(
               "Error: Tài khoản hoặc mật khẩu không chính xác!"
             );
+          }
+          if (check[0].status === true) {
+            alert("Tài khoản của bạn đang bị khóa! Vui lòng gọi điện cho admin qua sđt 0355621838 để mở khóa tài khoản.");
+            window.location.reload();
           } else {
             $("#incorrect-user,.mess-incorrect-user").css("color", "#20c997");
             $("#incorrect-user,.mess-incorrect-user").html(
@@ -70,7 +74,7 @@ class Login extends Component {
 
   render() {
     if (this.state.redirect) {
-      return window.location.assign('./admin')
+      return window.location.assign("./admin");
     }
     return (
       <div
