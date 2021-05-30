@@ -7,29 +7,22 @@ import Login from "../Components/Authentication/Login";
 import AccManagement from "../Components/Header/UserManage/AccManagement";
 import ChangePassword from "../Components/Header/UserManage/changePassword";
 
-import Ads from "../Components/Advertisement/Ads";
+import SearchContent from "../Components/Content/SearchContent";
 
-import Content from "../Components/Content/Content";
-
-import Footer from "../Components/Footer/Footer";
-
-const Homepage = () => {
+const Searchpage = (props) => {
   return (
     <div>
-      <Header/>
+      <Header />
       <ScrollOnTop />
-      <Ads />
       <Register />
       <Login />
 
       <AccManagement />
       <ChangePassword />
 
-      <Content/>
-
-      <Footer />
+      <SearchContent />
     </div>
   );
 };
 
-export default Homepage;
+export default Searchpage;

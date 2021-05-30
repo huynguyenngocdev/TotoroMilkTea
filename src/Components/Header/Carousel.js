@@ -86,7 +86,7 @@ class Carousel extends React.PureComponent {
             <span className="sr-only">Next</span>
           </a>
         </div>
-          <button type="button" className="btnToOrder">
+          <button type="button" onClick={()=>{document.getElementById("products").scrollIntoView({behavior: "smooth", inline: "nearest"});}} className="btnToOrder">
             Đặt hàng ngay
           </button>
       </div>

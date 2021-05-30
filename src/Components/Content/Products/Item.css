@@ -1,6 +1,9 @@
-.zoom{
-    transition: transform .2s;
+.card-image{
+    height: 200px !important;
 }
-.zoom:hover{
-    transform: scale(1.2); 
+
+.card-image:hover{
+    cursor: pointer;
+    transition: all 1s;
+    transform: scale(1.3);
 }

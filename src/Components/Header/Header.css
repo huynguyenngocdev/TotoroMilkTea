@@ -95,3 +95,16 @@
     display: none;
   }
 }
+
+
+/* cart */
+.count-cart{
+  position: absolute;
+  top: 18px;
+  left: 400px;
+  padding: 3px 8px;
+  background-color: red;
+  color: white;
+  font-size: 10px;
+  border-radius: 100%;
+}
