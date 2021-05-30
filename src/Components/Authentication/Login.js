@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import $ from "jquery";
 import callAPI from "../../API/callAPI";
 import showPassword from "../../Features/ShowPassword";
-import './styleAuthentication.css'
+import "./styleAuthentication.css";
 
 class Login extends Component {
   constructor(props) {
@@ -147,13 +147,16 @@ class Login extends Component {
                     <div className="invalid-feedback">
                       Không được để trống ô này.
                     </div>
-                    <div className="forgotPassword">
-                      <span data-toggle="modal" data-target="#forgotPwModal">
-                        Quên Mật Khẩu?
-                      </span>
-                    </div>
                   </div>
                   <div id="incorrect-user"></div>
+                </div>
+
+                <div className="form-group">
+                  <div className="forgotPassword">
+                    <span data-toggle="modal" data-target="#forgotPwModal">
+                      Quên Mật Khẩu?
+                    </span>
+                  </div>
                 </div>
 
                 <button
