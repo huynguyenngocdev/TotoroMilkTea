@@ -57,34 +57,32 @@ class checkOut extends Component {
 
     await callAPI("orders", "POST", order).then(() => {
       alert("Đặt hàng thành công! Vui lòng chuẩn bị tiền khi để nhận hàng.");
-      // create bill
-      let bill = {
-        billname: billname,
-        billphone: billphone,
-        billaddress: billaddress,
-        billemail: billemail,
-        products: JSON.parse(sessionStorage.getItem("carts")),
-        billdate: now.toLocaleString(),
-        billtotal: JSON.parse(sessionStorage.getItem("total")),
-      };
-
-      sessionStorage.setItem("bills", JSON.stringify(bill));
-      sessionStorage.removeItem("carts");
-      sessionStorage.removeItem("total");
-      sessionStorage.removeItem("countCart");
-
-      SendEmail(
-        bill.billemail,
-        `Quý khách đã đặt hàng vào lúc ${
-          bill.billdate
-        } và mã đơn là ${now.getTime()}.
-        Đơn hàng của quý khách đang chờ xử lý.
-        Quý khách sẽ nhân được hàng trong 30 phút nữa.
-        Cảm ơn quý khách đã đặt hàng.`
-      );
-
-      window.location.assign("/bill");
     });
+    // create bill
+    let bill = {
+      billname: billname, 
+      billphone: billphone,
+      billaddress: billaddress,
+      billemail: billemail,
+      products: JSON.parse(sessionStorage.getItem("carts")),
+      billdate: now.toLocaleString(),
+      billtotal: JSON.parse(sessionStorage.getItem("total")),
+    };
+
+    sessionStorage.setItem("bills", JSON.stringify(bill));
+    sessionStorage.removeItem("carts");
+    sessionStorage.removeItem("total");
+    sessionStorage.removeItem("countCart");
+    await SendEmail(
+      bill.billemail,
+      `Quý khách đã đặt hàng vào lúc ${
+        bill.billdate
+      } và mã đơn là ${now.getTime()}.
+      Đơn hàng của quý khách đang chờ xử lý.
+      Quý khách sẽ nhân được hàng trong 30 phút nữa.
+      Cảm ơn quý khách đã đặt hàng.`
+    );
+    window.location.assign("/bill");
   }
 
   render() {
@@ -157,7 +155,7 @@ class checkOut extends Component {
                       defaultValue={this.state.user.name}
                       required
                     />
-                     <div className="invalid-feedback">
+                    <div className="invalid-feedback">
                       Vui lòng nhập tên người nhận.
                     </div>
                   </div>
@@ -171,7 +169,7 @@ class checkOut extends Component {
                       defaultValue={this.state.user.phonenumber}
                       required
                     />
-                     <div className="invalid-feedback">
+                    <div className="invalid-feedback">
                       Vui lòng nhập số điện thoại hợp lệ.
                     </div>
                   </div>
