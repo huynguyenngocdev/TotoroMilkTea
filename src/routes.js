@@ -5,8 +5,8 @@ import NotFound from "Components/NotFound/index";
 import AdsManagement from "./Components/Admin/AdsManagement";
 import OrderManagement from "Components/Admin/OrderManagement";
 import ProductManagement from "Components/Admin/ProductManagement";
-import UserManagement from "Components/Admin/UserManagement";
-
+import UserManagement from "Components/Admin/UserManagement/UserManagement";
+import UpdateUser from "Components/Admin/UserManagement/UpdateUser"
 const routes = [
   {
     path: "/",
@@ -55,6 +55,11 @@ const amdinRoutes = [
     path: "/admin/users",
     exact: true,
     main: () => <UserManagement />,
+  },
+  {
+    path: "/admin/user/:id/edit",
+    exact: true,
+    main: ({ match }) => <UpdateUser match={match} />,
   }
 ];
 

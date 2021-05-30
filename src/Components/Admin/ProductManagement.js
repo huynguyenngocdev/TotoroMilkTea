@@ -327,7 +327,7 @@ class ProductManagement extends Component {
         </div>
 
         {/* show list products */}
-        <table className="table text-center">
+        <table className="table text-center table-hover">
           <thead>
             <tr>
               <th>ID sản phẩm</th>

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import callAPI from "../../API/callAPI";
+import sendEmail from "../../Features/SendEmail";
 class OrderManagement extends Component {
   constructor(props) {
     super(props);
@@ -22,9 +23,9 @@ class OrderManagement extends Component {
   }
 
   async changeStatusOrder(id, index) {
-    let statusOrder = "Chờ xử lý";
+    let statusOrder = "Hoàn thành";
     const data = this.state.orders[index];
-    if (data.status === 1) {
+    if (data.status === 0) {
       statusOrder = "Đang giao";
     }
 
@@ -40,9 +41,38 @@ class OrderManagement extends Component {
         data.status = 2;
       }
 
-      console.table(index, id, data.status);
+      let emailUser = await callAPI(
+        `users?name=${data.customerName}`,
+        "GET",
+        null
+      )
+        .then((res) => res.data[0].email)
+        .catch(() => null);
 
-      //put to JSON server
+      if (emailUser !== null) {
+        let message =
+          data.status === 1
+            ? `Quý khách đã đặt hàng vào lúc ${data.buyAt} và mã đơn là ${id}.
+        Đơn hàng của quý khách đang ở trạng thái ${statusOrder}.
+        Quý khách sẽ nhân được hàng trong 30 phút nữa.
+        Cảm ơn quý khách đã đặt hàng.`
+            : `Quý khách đã đặt hàng vào lúc ${data.buyAt} và mã đơn là ${id}.
+        Đơn hàng của quý khách đang ở trạng thái ${statusOrder}.
+        Chúc quý khách ngon miệng.
+        Cảm ơn quý khách đã đặt hàng.`;
+        sendEmail(emailUser, message)
+          .then(() => {
+            alert("Gửi email cho khách thành công!");
+          })
+          .catch(() => {
+            alert("Gửi email cho khách không thành công!");
+          });
+      } else {
+        alert("Gửi email cho khách hàng không thành công!");
+      }
+
+      // console.table(index, id, data.status);
+      // put to JSON server
       await callAPI(`orders/${id}`, "PUT", data)
         .then(() => {
           alert("Cập nhật trạng thái cho đơn thành công!");
@@ -54,11 +84,34 @@ class OrderManagement extends Component {
       this.componentDidMount(); //render again
     }
   }
-  
+
   async cancelOrder(id, index) {
     if (window.confirm(`Hủy đơn có mã là ${id} ?`)) {
       let data = this.state.orders[index];
       data.status = 3;
+
+      let emailUser = await callAPI(
+        `users?name=${data.customerName}`,
+        "GET",
+        null
+      )
+        .then((res) => res.data[0].email)
+        .catch(() => null);
+
+      if (emailUser !== null) {
+        let message = `Quý khách đã đặt hàng vào lúc ${data.buyAt} và mã đơn là ${id}.
+        Hiện tại đơn hàng của quý khách đã bị hủy.
+        Cảm ơn quý khách đã ghé thăm.`;
+        sendEmail(emailUser, message)
+          .then(() => {
+            alert("Gửi email cho khách thành công!");
+          })
+          .catch(() => {
+            alert("Gửi email cho khách không thành công!");
+          });
+      } else {
+        alert("Gửi email cho khách hàng không thành công!");
+      }
 
       await callAPI(`orders/${id}`, "PUT", data).then(() => {
         alert("Hủy đơn thành công!");
@@ -70,7 +123,7 @@ class OrderManagement extends Component {
   render() {
     return (
       <div>
-        <table className="table text-center">
+        <table className="table text-center table-hover">
           <thead>
             <tr>
               <th>Mã đơn</th>
