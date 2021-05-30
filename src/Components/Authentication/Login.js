@@ -70,7 +70,6 @@ class Login extends Component {
 
   render() {
     if (this.state.redirect) {
-      console.log(this.state.redirect);
       return window.location.assign('./admin')
     }
     return (
