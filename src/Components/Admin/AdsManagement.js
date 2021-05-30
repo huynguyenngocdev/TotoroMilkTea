@@ -203,8 +203,8 @@ class AdsManagement extends Component {
                 id="statusAds"
                 defaultValue={this.state.ads.status}
               >
-                <option value={1}>Đang bật</option>
-                <option value={0}>Đang tắt</option>
+                <option value={true}>Đang bật</option>
+                <option value={false}>Đang tắt</option>
               </select>
             </div>
             {/* btn submit */}
