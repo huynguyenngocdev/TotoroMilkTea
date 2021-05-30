@@ -40,7 +40,7 @@ class AdsManagement extends Component {
       textStandstill: $("#textStandstillAds").val(),
       textRun: $("#textRunAds").val(),
       discount: $("#discountAds").val(),
-      status: Boolean($("#statusAds").val()),
+      status: $("#statusAds").val() === "true" ? true : false,
       updateAt: this.state.ads.updateAt,
     };
 
