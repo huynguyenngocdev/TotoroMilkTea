@@ -1,0 +1,7 @@
+.forgotPassword span {
+  color: #007bff;
+}
+
+.forgotPassword:hover span {
+  text-decoration: underline;
+}

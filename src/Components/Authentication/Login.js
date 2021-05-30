@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import $ from "jquery";
 import callAPI from "../../API/callAPI";
 import showPassword from "../../Features/ShowPassword";
-// import axios from "axios";
+import './styleAuthentication.css'
+
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -43,7 +44,9 @@ class Login extends Component {
             );
           }
           if (check[0].status === true) {
-            alert("Tài khoản của bạn đang bị khóa! Vui lòng gọi điện cho admin qua sđt 0355621838 để mở khóa tài khoản.");
+            alert(
+              "Tài khoản của bạn đang bị khóa! Vui lòng gọi điện cho admin qua sđt 0355621838 để mở khóa tài khoản."
+            );
             window.location.reload();
           } else {
             $("#incorrect-user,.mess-incorrect-user").css("color", "#20c997");
@@ -143,6 +146,11 @@ class Login extends Component {
                     </button>
                     <div className="invalid-feedback">
                       Không được để trống ô này.
+                    </div>
+                    <div className="forgotPassword">
+                      <span data-toggle="modal" data-target="#forgotPwModal">
+                        Quên Mật Khẩu?
+                      </span>
                     </div>
                   </div>
                   <div id="incorrect-user"></div>

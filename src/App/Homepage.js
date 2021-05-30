@@ -6,6 +6,7 @@ import Register from "../Components/Authentication/Register";
 import Login from "../Components/Authentication/Login";
 import AccManagement from "../Components/Header/UserManage/AccManagement";
 import ChangePassword from "../Components/Header/UserManage/changePassword";
+import ForgotPassword from "../Components/Authentication/ForgotPassword";
 
 import Ads from "../Components/Advertisement/Ads";
 
@@ -24,6 +25,7 @@ const Homepage = () => {
 
       <AccManagement />
       <ChangePassword />
+      <ForgotPassword />
 
       <Content/>
 
