@@ -132,6 +132,7 @@ class OrderManagement extends Component {
               <th>Số lượng</th>
               <th>Tổng tiền</th>
               <th>Ngày mua</th>
+              <th>Địa chỉ giao</th>
               <th>Trạng thái</th>
               <th>Hủy đơn</th>
             </tr>
@@ -159,6 +160,7 @@ class OrderManagement extends Component {
                 </td>
                 <td>{order.total}</td>
                 <td>{order.buyAt}</td>
+                <td>{order.deliveryAddress}</td>
                 <td>
                   {order.status === 3 ? (
                     <span style={{ color: "red" }}>Đã bị hủy</span>
