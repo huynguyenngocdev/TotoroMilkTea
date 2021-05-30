@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Marquee from "react-fast-marquee";
 import "./Ads.css";
 import callAPI from ".../../API/callAPI";
 import ImageDefault from "../../Constants/images";
@@ -80,12 +81,12 @@ class Ads extends Component {
         {this.state.adsInfor.status === true && this.state.deadline > 0 ? (
           <div>
             <div className="container text-run">
-              <marquee behavior="scroll" scrollamount="12">
+              <Marquee speed={100} gradient={false}>
                 <h3>
                   <span className="text-jump">Khuyến mãi rộn ràng!&nbsp;</span>
                   {this.state.adsInfor.textRun}
-                </h3>
-              </marquee>
+                </h3> 
+              </Marquee>
             </div>
             <div className="container ads">
               <img
