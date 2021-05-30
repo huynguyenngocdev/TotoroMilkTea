@@ -116,8 +116,7 @@ class UpdateUser extends Component {
       name,
       email,
       address,
-      phonenumber,
-      status } = this.state;
+      phonenumber} = this.state;
     return (
 
       <div className="form-center">
