@@ -146,7 +146,7 @@ class Cart extends Component {
                               />
                             </td>
                             <td>{item.name}</td>
-                            <td className="row">
+                            <td className="btn-group">
                               <button
                                 onClick={() => this.minusQty(item, key)}
                                 className="btn btn-danger"
@@ -156,7 +156,7 @@ class Cart extends Component {
                               <input
                                 disabled
                                 style={{ width: "80px" }}
-                                className="form-control"
+                                className="btn form-control"
                                 type="number"
                                 value={item.quantity}
                               />

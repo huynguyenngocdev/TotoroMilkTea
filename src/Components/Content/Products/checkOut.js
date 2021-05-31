@@ -60,7 +60,7 @@ class checkOut extends Component {
     });
     // create bill
     let bill = {
-      billname: billname, 
+      billname: billname,
       billphone: billphone,
       billaddress: billaddress,
       billemail: billemail,
@@ -202,11 +202,12 @@ class checkOut extends Component {
                     </div>
                   </div>
                   <hr className="mb-4" />
+
                   <button
                     type="submit"
                     className="btn btn-success btn-lg btn-block"
                   >
-                    Thanh toán
+                    Thanh toán khi nhận hàng
                   </button>
                 </form>
               </div>

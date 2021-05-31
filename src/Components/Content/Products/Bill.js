@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import Navbar from "../../Header/Navbar";
 import { Link } from "react-router-dom";
-
+import PaymentByMoMo from "./PaymentByMoMo";
 class Bill extends Component {
   render() {
     let item = JSON.parse(sessionStorage.getItem("bills"));
+    const iframe =
+      `<iframe title="payment online" src="https://nhantien.momo.vn/CEzqPXh1gsP/${item.billtotal}" width="1000px" height="500px" frameBorder="0"></iframe>`;
     if (localStorage.getItem("currentAccount") && item) {
       return (
         <div>
@@ -14,7 +16,8 @@ class Bill extends Component {
               <div className="col-3">
                 <h5>Đơn hàng</h5>
                 <p>
-                  <b>Tài khoản đặt: </b> {JSON.parse(localStorage.getItem('currentAccount')).username}
+                  <b>Tài khoản đặt: </b>{" "}
+                  {JSON.parse(localStorage.getItem("currentAccount")).username}
                 </p>
                 <p>
                   <b>Người nhận: </b> {item.billname}
@@ -37,7 +40,6 @@ class Bill extends Component {
                     style: "currency",
                     currency: "VND",
                   })}
-                  VND
                 </p>
               </div>
               <div className="col-9">
@@ -50,7 +52,7 @@ class Bill extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {item.products.map((el,index) => (
+                    {item.products.map((el, index) => (
                       <tr key={index}>
                         <td>{el.name}</td>
                         <td>
@@ -64,10 +66,17 @@ class Bill extends Component {
                     ))}
                   </tbody>
                 </table>
+                <div className="container text-center">
+                  <PaymentByMoMo iframe={iframe} />
+                </div>
               </div>
             </div>
           </div>
-          <div className='text-center'><Link to='/' className='btn btn-success'>Về trang chủ</Link></div>
+          <div className="text-center">
+            <Link to="/" className="btn btn-success">
+              Về trang chủ
+            </Link>
+          </div>
         </div>
       );
     } else {
