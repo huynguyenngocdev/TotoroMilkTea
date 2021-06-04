@@ -34,11 +34,13 @@ class Register extends Component {
     let x=false,y=false;
     await callAPI(resIdLog, "GET", null).then((res) => {
       let check = res.data;
-      if(check.length===0){
+      if(check.length!==0||idLog.toLowerCase() ==="admin"){
+      
+        $("#invalid-user").css("color", "red").html("Notice: Tên đăng nhập này không hợp lệ hoặc đã được sử dụng! ")
+       
+      }else{
         $("#invalid-user").css("color", "#20c997").html("Notice: Tên đăng nhập hợp lệ! ")
         x=true;
-      }else{
-        $("#invalid-user").css("color", "red").html("Notice: Tên đăng nhập này đã được sử dụng! ")
       }
     }).catch(
      err=>{
@@ -62,8 +64,10 @@ class Register extends Component {
     );
     if(x&&y){
       let content = `Mã xác nhận của bạn là:${code}`
+      console.log(content);
       SendEmail(email, content).then(() => { alert('Gửi mail thành công')
-      let a = prompt("Nhập Mã Xác nhận đã được gửi đến email")
+      let a = parseInt(prompt("Nhập Mã Xác nhận đã được gửi đến email"))
+      console.log(a);
       if(a===code){
         alert("Code chính xác")
         let user=this.state;
